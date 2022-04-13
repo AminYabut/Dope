@@ -14,10 +14,10 @@
         internal int Offset { get; private init; }
 
         internal static MonoClassField Create(Memory memory, ulong address) {
-            var type = MonoType.Create(memory, memory.Read<ulong>(address + 0x0));
-            var name = memory.ReadString(memory.Read<ulong>(address + 0x8), 255);
-            var parent = MonoClass.Create(memory, memory.Read<ulong>(address + 0x10));
-            var offset = memory.Read<int>(address + 0x18);
+            var type = MonoType.Create(memory, memory.Read<ulong>(address + Offsets.MonoClassFieldType));
+            var name = memory.ReadString(memory.Read<ulong>(address + Offsets.MonoClassFieldName), 255);
+            var parent = MonoClass.Create(memory, memory.Read<ulong>(address + Offsets.MonoClassFieldParent));
+            var offset = memory.Read<int>(address + Offsets.MonoClassFieldOffset);
 
             return new (memory, address) {
                 Type = type,

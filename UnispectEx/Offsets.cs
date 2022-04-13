@@ -22,6 +22,12 @@
         internal const int MonoClassFields = 0x98;
         internal const int MonoClassFieldsCount = 0x100;
         
+        // _MonoClassField
+        internal const int MonoClassFieldType = 0x0;
+        internal const int MonoClassFieldName = 0x8;
+        internal const int MonoClassFieldParent = 0x10;
+        internal const int MonoClassFieldOffset = 0x18;
+        
         // _MonoInternalHashTable
         internal const int HashTableNext = 0x10;
         internal const int HashTableSize = 0x18;
