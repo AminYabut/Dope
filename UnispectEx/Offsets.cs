@@ -19,6 +19,8 @@
         internal const int AssemblyNameArch = 0x48;
         
         // _MonoClass
+        internal const int MonoClassName = 0x48;
+        internal const int MonoClassNamespace = 0x50;
         internal const int MonoClassFields = 0x98;
         internal const int MonoClassFieldsCount = 0x100;
         

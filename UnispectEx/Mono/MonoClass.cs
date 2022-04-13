@@ -13,8 +13,8 @@ namespace UnispectEx.Mono {
 
         internal string FullName => Namespace != String.Empty ? $"{Namespace}.{Name}" : Name;
 
-        internal string Namespace { get; private init; }
         internal string Name { get; private init; }
+        internal string Namespace { get; private init; }
 
         internal IEnumerable<MonoClassField> Fields() {
             var fields = _memory.Read<ulong>(Address + Offsets.MonoClassFields);
@@ -25,12 +25,12 @@ namespace UnispectEx.Mono {
         }
 
         internal static MonoClass Create(Memory memory, ulong address) {
-            var namespaceName = memory.ReadString(memory.Read<ulong>(address + 0x50), 255);
-            var name = memory.ReadString(memory.Read<ulong>(address + 0x48), 255);
+            var name = memory.ReadString(memory.Read<ulong>(address + Offsets.MonoClassName), 255);
+            var namespaceName = memory.ReadString(memory.Read<ulong>(address + Offsets.MonoClassNamespace), 255);
 
             return new(memory, address) {
+                Name = name,
                 Namespace = namespaceName,
-                Name = name
             };
         }
 

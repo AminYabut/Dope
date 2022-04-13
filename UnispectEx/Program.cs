@@ -21,6 +21,8 @@ namespace UnispectEx {
                     continue;
 
                 foreach (var type in assembly.Image.Types()) {
+                    Console.WriteLine(type.FullName);
+                    
                     foreach (var field in type.Fields()) {
                         if (field.Name != string.Empty) {
                             Console.WriteLine($"field: {field.Name}:{field.Offset}");
