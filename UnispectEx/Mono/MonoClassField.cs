@@ -1,6 +1,4 @@
-﻿using UnispectEx.Mono.Enums;
-
-namespace UnispectEx.Mono {
+﻿namespace UnispectEx.Mono {
     internal class MonoClassField {
         private MonoClassField(Memory memory, ulong address) {
             Address = address;
