@@ -9,10 +9,10 @@ namespace UnispectEx.Pe {
         private PeFile(Memory memory) {
             _memory = memory;
         }
-        
-        internal ulong BaseAddress { get; init; }
-        internal ImageDosHeader DosHeader { get; init; }
-        internal ImageNtHeaders NtHeaders { get; init; }
+
+        internal ulong BaseAddress { get; private init; }
+        internal ImageDosHeader DosHeader { get; private init; }
+        internal ImageNtHeaders NtHeaders { get; private init; }
 
         internal ulong GetExport(string name) {
             var directoryEntry = GetDataDirectory(DataDirectory.Export);
@@ -24,13 +24,12 @@ namespace UnispectEx.Pe {
 
             for (uint i = 0; i < directory.NamesCount; ++i) {
                 var nameAddress = _memory.Read<uint>(BaseAddress + directory.AddressOfNames + i * 0x4);
-                
-                if (!_memory.ReadBytes(BaseAddress + nameAddress, out var buffer, 0xFF)) {
+
+                if (!_memory.ReadBytes(BaseAddress + nameAddress, out var buffer, 255))
                     return 0;
-                }
-                
+
                 // TODO: calculate size dynamically
-                var functionName = Encoding.ASCII.GetString(new Span<byte>(buffer,0, Array.IndexOf(buffer, (byte) 0)));
+                var functionName = Encoding.ASCII.GetString(new Span<byte>(buffer, 0, Array.IndexOf(buffer, (byte) 0)));
 
                 if (functionName == name) {
                     var offset = _memory.Read<ushort>(BaseAddress + directory.AddressOfNameOrdinals + i * 2);
@@ -41,7 +40,7 @@ namespace UnispectEx.Pe {
 
             return 0;
         }
-        
+
         internal ImageDataDirectory GetDataDirectory(DataDirectory id) {
             var dataDirectories = NtHeaders.OptionalHeader.DataDirectories;
 
@@ -54,8 +53,8 @@ namespace UnispectEx.Pe {
         internal static PeFile Create(Memory memory, ulong address) {
             var dosHeader = ImageDosHeader.Create(memory, address);
             var ntHeaders = ImageNtHeaders.Create(memory, address + dosHeader.NtHeadersOffset);
-            
-            return new PeFile(memory) {
+
+            return new(memory) {
                 BaseAddress = address,
                 DosHeader = dosHeader,
                 NtHeaders = ntHeaders
