@@ -10,7 +10,11 @@ namespace UnispectEx.Mono {
             _cache = cache;
         }
 
+        public override string ToString() => FullName ?? "<ERROR_READING_NAME>";
+
         internal ulong Address { get; }
+
+        internal string? FullName => $"{Type.MonoClass.FullName} {Parent.Name}::{Name}";
 
         internal MonoType Type => _type ??= MonoType.Create(_memory, _memory.Read<ulong>(Address + Offsets.MonoClassFieldType), _cache);
         internal string Name => _name ??= _memory.ReadString(_memory.Read<ulong>(Address + Offsets.MonoClassFieldName), 255);

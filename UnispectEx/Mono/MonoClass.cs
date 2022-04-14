@@ -11,6 +11,10 @@ namespace UnispectEx.Mono {
             _cache = cache;
         }
 
+        public override string ToString() {
+            return FullName ?? "<ERROR_READING_NAME>";
+        }
+
         internal ulong Address { get; }
 
         internal string? FullName => Namespace != string.Empty ? $"{Namespace}.{Name}" : Name;
