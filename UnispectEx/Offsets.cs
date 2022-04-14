@@ -21,8 +21,17 @@
         // _MonoClass
         internal const int MonoClassName = 0x48;
         internal const int MonoClassNamespace = 0x50;
+        internal const int MonoClassTypeToken = 0x58;
         internal const int MonoClassFields = 0x98;
-        internal const int MonoClassFieldsCount = 0x100;
+        
+        // MonoClassDef
+        internal const int MonoClassDefClass = 0x0;
+        internal const int MonoClassDefFlags = 0xF0;
+        internal const int MonoClassDefFirstMethodIdx = 0xF4;
+        internal const int MonoClassDefFirstFieldIdx = 0xF8;
+        internal const int MonoClassDefMethodCount = 0xFC;
+        internal const int MonoClassDefFieldCount = 0x100;
+        internal const int MonoClassDefNextCache = 0x108;
         
         // _MonoClassField
         internal const int MonoClassFieldType = 0x0;
@@ -37,8 +46,5 @@
         internal const int HashTableNext = 0x10;
         internal const int HashTableSize = 0x18;
         internal const int HashTableTable = 0x20;
-
-        // ???
-        internal const int ClassNextClassCache = 0x108;   // MonoClassDef.NextClassCache
     }
 }

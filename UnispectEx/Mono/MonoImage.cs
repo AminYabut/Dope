@@ -19,7 +19,7 @@ namespace UnispectEx.Mono {
             for (uint i = 0; i < size; i++) {
                 for (var it = _memory.Read<ulong>(table + i * 0x8);
                      it != 0;
-                     it = _memory.Read<ulong>(it + Offsets.ClassNextClassCache)) {
+                     it = _memory.Read<ulong>(it + Offsets.MonoClassDefNextCache)) {
                     yield return MonoClass.Create(_memory, it);
                 }
             }

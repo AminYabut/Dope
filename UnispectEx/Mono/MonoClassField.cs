@@ -1,4 +1,6 @@
-﻿namespace UnispectEx.Mono {
+﻿using System;
+
+namespace UnispectEx.Mono {
     internal class MonoClassField {
         private MonoClassField(Memory memory, ulong address) {
             Address = address;
@@ -12,6 +14,32 @@
         internal string Name { get; private init; }
         internal MonoClass Parent { get; private init; }
         internal int Offset { get; private init; }
+
+        internal int Token {
+            get {
+                if (_token.HasValue)
+                    return _token.Value;
+                
+                var parent = Parent;
+                var fieldCount = parent.FieldCount;
+
+                if (fieldCount == 0)
+                    throw new InvalidOperationException("parent has no fields!");
+
+                uint idx = 0;
+                foreach (var field in parent.Fields()) {
+                    ++idx;
+                    if (field.Address == Address)
+                        break;
+                }
+                
+                var token = (int) (idx + parent.FirstFieldIdx + 1) | 0x4000000;
+                
+                _token = token;
+
+                return token;
+            }
+        }
 
         internal static MonoClassField Create(Memory memory, ulong address) {
             var type = MonoType.Create(memory, memory.Read<ulong>(address + Offsets.MonoClassFieldType));
@@ -27,6 +55,7 @@
             };
         }
 
+        private int? _token;
         private readonly Memory _memory;
     }
 }

@@ -11,16 +11,22 @@ namespace UnispectEx.Mono {
 
         internal ulong Address { get; }
 
-        internal string FullName => Namespace != String.Empty ? $"{Namespace}.{Name}" : Name;
+        internal string FullName => Namespace != string.Empty ? $"{Namespace}.{Name}" : Name;
 
         internal string Name { get; private init; }
         internal string Namespace { get; private init; }
 
+        internal uint FirstMethodIdx => _firstMethodIdx ??= _memory.Read<uint>(Address + 0xF8);
+        internal uint FirstFieldIdx => _firstFieldIdx ??= _memory.Read<uint>(Address + 0xF8);
+
+        internal uint MethodCount => _methodCount ??= _memory.Read<uint>(Address + Offsets.MonoClassDefMethodCount);
+        internal uint FieldCount => _fieldCount ??= _memory.Read<uint>(Address + Offsets.MonoClassDefFieldCount);
+
+        internal int Token => _token ??= _memory.Read<int>(Address + Offsets.MonoClassTypeToken);
+
         internal IEnumerable<MonoClassField> Fields() {
             var fields = _memory.Read<ulong>(Address + Offsets.MonoClassFields);
-            var fieldsCount = _memory.Read<uint>(Address + Offsets.MonoClassFieldsCount);
-
-            for (uint i = 0; i < fieldsCount; ++i)
+            for (uint i = 0; i < FieldCount; ++i)
                 yield return MonoClassField.Create(_memory, fields + i * 0x20);
         }
 
@@ -34,6 +40,11 @@ namespace UnispectEx.Mono {
             };
         }
 
+        private int? _token;
+        private uint? _firstMethodIdx;
+        private uint? _firstFieldIdx;
+        private uint? _methodCount;
+        private uint? _fieldCount;
         private readonly Memory _memory;
     }
 }
