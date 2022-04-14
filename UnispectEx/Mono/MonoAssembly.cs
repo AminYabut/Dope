@@ -10,19 +10,15 @@ namespace UnispectEx.Mono {
 
         internal ulong Address { get; }
 
-        internal MonoAssemblyName AssemblyName { get; private init; }
-        internal MonoImage Image { get; private init; }
+        internal MonoAssemblyName AssemblyName => _assemblyName ??= MonoAssemblyName.Create(_memory, Address + Offsets.MonoAssemblyName);
+        internal MonoImage Image => _image ??= MonoImage.Create(_memory, _memory.Read<ulong>(Address + Offsets.MonoAssemblyImage));
 
         internal static MonoAssembly Create(MemoryConnector memory, ulong address) {
-            var assemblyName = MonoAssemblyName.Create(memory, address + Offsets.MonoAssemblyName);
-            var image = MonoImage.Create(memory, memory.Read<ulong>(address + Offsets.MonoAssemblyImage));
-
-            return new(memory, address) {
-                Image = image,
-                AssemblyName = assemblyName
-            };
+            return new(memory, address);
         }
 
+        private MonoAssemblyName? _assemblyName;
+        private MonoImage? _image;
         private readonly MemoryConnector _memory;
     }
 }

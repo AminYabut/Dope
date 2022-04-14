@@ -16,7 +16,7 @@ namespace UnispectEx.Util {
 
         internal override bool Attach(int pid) {
             Process process;
-            
+
             try {
                 process = Process.GetProcessById(pid);
             }

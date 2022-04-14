@@ -25,7 +25,7 @@ namespace UnispectEx.Mono {
             }
         }
 
-        internal static MonoAppDomain Create(MemoryConnector memory, ulong address) {
+        internal static MonoAppDomain? Create(MemoryConnector memory, ulong address) {
             return new(memory, address);
         }
 

@@ -10,16 +10,13 @@ namespace UnispectEx.Mono {
 
         internal ulong Address { get; }
 
-        internal MonoClass MonoClass { get; private init; }
+        internal MonoClass MonoClass => _class ??= MonoClass.Create(_memory, _memory.Read<ulong>(Address + Offsets.MonoTypeData));
 
         internal static MonoType Create(MemoryConnector memory, ulong address) {
-            var monoClass = MonoClass.Create(memory, memory.Read<ulong>(address + Offsets.MonoTypeData));
-
-            return new(memory, address) {
-                MonoClass = monoClass
-            };
+            return new(memory, address);
         }
 
+        private MonoClass? _class;
         private readonly MemoryConnector _memory;
     }
 }

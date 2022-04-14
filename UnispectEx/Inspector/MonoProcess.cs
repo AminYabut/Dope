@@ -16,7 +16,7 @@ namespace UnispectEx.Inspector {
         internal bool Initialize(string monoDll) {
             var domain = GetRootDomain(monoDll);
 
-            if (domain == null)
+            if (domain is null)
                 return false;
 
             Domain = domain;
@@ -24,7 +24,7 @@ namespace UnispectEx.Inspector {
             return true;
         }
 
-        private MonoAppDomain GetRootDomain(string monoDll) {
+        private MonoAppDomain? GetRootDomain(string monoDll) {
             var dll = _memory.GetModule(monoDll);
 
             if (dll == 0)

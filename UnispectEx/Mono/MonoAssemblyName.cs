@@ -10,31 +10,24 @@ namespace UnispectEx.Mono {
 
         internal ulong Address { get; }
 
-        internal string Name { get; private init; }
-        internal short Major { get; private init; }
-        internal short Minor { get; private init; }
-        internal short Build { get; private init; }
-        internal short Revision { get; private init; }
-        internal short Arch { get; private init; }
+        internal string? Name => _name ??= _memory.ReadString(_memory.Read<ulong>(Address + Offsets.MonoAssemblyNameName), 255);
+
+        internal short? Major => _major ??= _memory.Read<short>(Address + Offsets.MonoAssemblyNameMajor);
+        internal short? Minor => _minor ??= _memory.Read<short>(Address + Offsets.MonoAssemblyNameMinor);
+        internal short? Build => _build ??= _memory.Read<short>(Address + Offsets.MonoAssemblyNameBuild);
+        internal short? Revision => _revision ??= _memory.Read<short>(Address + Offsets.MonoAssemblyNameRevision);
+        internal short? Arch => _arch ??= _memory.Read<short>(Address + Offsets.MonoAssemblyNameArch);
 
         internal static MonoAssemblyName Create(MemoryConnector memory, ulong address) {
-            var name = memory.ReadString(memory.Read<ulong>(address + Offsets.MonoAssemblyNameName), 255);
-            var major = memory.Read<short>(address + Offsets.MonoAssemblyNameMajor);
-            var minor = memory.Read<short>(address + Offsets.MonoAssemblyNameMinor);
-            var build = memory.Read<short>(address + Offsets.MonoAssemblyNameBuild);
-            var revision = memory.Read<short>(address + Offsets.MonoAssemblyNameRevision);
-            var arch = memory.Read<short>(address + Offsets.MonoAssemblyNameArch);
-
-            return new(memory, address) {
-                Name = name,
-                Major = major,
-                Minor = minor,
-                Build = build,
-                Revision = revision,
-                Arch = arch
-            };
+            return new(memory, address);
         }
 
+        private string? _name;
+        private short? _major;
+        private short? _minor;
+        private short? _build;
+        private short? _revision;
+        private short? _arch;
         private readonly MemoryConnector _memory;
     }
 }

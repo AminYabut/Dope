@@ -11,10 +11,10 @@ namespace UnispectEx.Mono {
 
         internal ulong Address { get; }
 
-        internal MonoType Type { get; private init; }
-        internal string Name { get; private init; }
-        internal MonoClass Parent { get; private init; }
-        internal int Offset { get; private init; }
+        internal MonoType Type => _type ??= MonoType.Create(_memory, _memory.Read<ulong>(Address + Offsets.MonoClassFieldType));
+        internal string Name => _name ??= _memory.ReadString(_memory.Read<ulong>(Address + Offsets.MonoClassFieldName), 255);
+        internal MonoClass Parent => _parent ??= MonoClass.Create(_memory, _memory.Read<ulong>(Address + Offsets.MonoClassFieldParent));
+        internal int Offset => _offset ??= _memory.Read<int>(Address + Offsets.MonoClassFieldOffset);
 
         internal int Token {
             get {
@@ -43,19 +43,13 @@ namespace UnispectEx.Mono {
         }
 
         internal static MonoClassField Create(MemoryConnector memory, ulong address) {
-            var type = MonoType.Create(memory, memory.Read<ulong>(address + Offsets.MonoClassFieldType));
-            var name = memory.ReadString(memory.Read<ulong>(address + Offsets.MonoClassFieldName), 255);
-            var parent = MonoClass.Create(memory, memory.Read<ulong>(address + Offsets.MonoClassFieldParent));
-            var offset = memory.Read<int>(address + Offsets.MonoClassFieldOffset);
-
-            return new(memory, address) {
-                Type = type,
-                Name = name,
-                Parent = parent,
-                Offset = offset
-            };
+            return new(memory, address);
         }
 
+        private MonoType? _type;
+        private string? _name;
+        private MonoClass? _parent;
+        private int? _offset;
         private int? _token;
         private readonly MemoryConnector _memory;
     }

@@ -12,10 +12,10 @@ namespace UnispectEx.Mono {
 
         internal ulong Address { get; }
 
-        internal string FullName => Namespace != string.Empty ? $"{Namespace}.{Name}" : Name;
+        internal string? FullName => Namespace != string.Empty ? $"{Namespace}.{Name}" : Name;
 
-        internal string Name { get; private init; }
-        internal string Namespace { get; private init; }
+        internal string? Name => _name ??= _memory.ReadString(_memory.Read<ulong>(Address + Offsets.MonoClassName), 255);
+        internal string? Namespace => _namespace ??= _memory.ReadString(_memory.Read<ulong>(Address + Offsets.MonoClassNamespace), 255);
 
         internal uint FirstMethodIdx => _firstMethodIdx ??= _memory.Read<uint>(Address + Offsets.MonoClassDefFirstMethodIdx);
         internal uint FirstFieldIdx => _firstFieldIdx ??= _memory.Read<uint>(Address + Offsets.MonoClassDefFirstFieldIdx);
@@ -32,20 +32,16 @@ namespace UnispectEx.Mono {
         }
 
         internal static MonoClass Create(MemoryConnector memory, ulong address) {
-            var name = memory.ReadString(memory.Read<ulong>(address + Offsets.MonoClassName), 255);
-            var namespaceName = memory.ReadString(memory.Read<ulong>(address + Offsets.MonoClassNamespace), 255);
-
-            return new(memory, address) {
-                Name = name,
-                Namespace = namespaceName,
-            };
+            return new(memory, address);
         }
 
-        private int? _token;
+        private string? _name;
+        private string? _namespace;
         private uint? _firstMethodIdx;
         private uint? _firstFieldIdx;
         private uint? _methodCount;
         private uint? _fieldCount;
+        private int? _token;
         private readonly MemoryConnector _memory;
     }
 }
