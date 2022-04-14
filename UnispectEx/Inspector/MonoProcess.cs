@@ -11,7 +11,7 @@ namespace UnispectEx.Inspector {
             _memory = memory;
         }
 
-        internal MonoAppDomain Domain { get; private set; }
+        internal MonoAppDomain? Domain { get; private set; }
 
         internal bool Initialize(string monoDll) {
             var domain = GetRootDomain(monoDll);
@@ -53,9 +53,10 @@ namespace UnispectEx.Inspector {
             var offset = _memory.Read<uint>(export + 0x3);
             var domain = _memory.Read<ulong>(export + 0x7 + offset);
 
-            return MonoAppDomain.Create(_memory, domain);
+            return MonoAppDomain.Create(_memory, domain, _cache);
         }
 
         private readonly MemoryConnector _memory;
+        private readonly MonoObjectCache _cache = new();
     }
 }

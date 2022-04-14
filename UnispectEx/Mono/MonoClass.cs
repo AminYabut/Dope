@@ -4,10 +4,11 @@ using UnispectEx.Util;
 
 namespace UnispectEx.Mono {
     internal class MonoClass {
-        private MonoClass(MemoryConnector memory, ulong address) {
+        private MonoClass(MemoryConnector memory, ulong address, MonoObjectCache cache) {
             Address = address;
 
             _memory = memory;
+            _cache = cache;
         }
 
         internal ulong Address { get; }
@@ -27,12 +28,24 @@ namespace UnispectEx.Mono {
 
         internal IEnumerable<MonoClassField> Fields() {
             var fields = _memory.Read<ulong>(Address + Offsets.MonoClassFields);
+            if (fields == 0)
+                yield break;
+            
             for (uint i = 0; i < FieldCount; ++i)
-                yield return MonoClassField.Create(_memory, fields + i * 0x20);
+                yield return MonoClassField.Create(_memory, fields + i * 0x20, _cache);
         }
 
-        internal static MonoClass Create(MemoryConnector memory, ulong address) {
-            return new(memory, address);
+        internal static MonoClass Create(MemoryConnector memory, ulong address, MonoObjectCache cache) {
+            lock (cache.MonoClassLockObject) {
+                if (cache.TryGetClass(address, out var monoClass))
+                    return monoClass!;
+
+                var result = new MonoClass(memory, address, cache);
+
+                cache.Cache(address, result);
+
+                return result;
+            }
         }
 
         private string? _name;
@@ -43,5 +56,6 @@ namespace UnispectEx.Mono {
         private uint? _fieldCount;
         private int? _token;
         private readonly MemoryConnector _memory;
+        private readonly MonoObjectCache _cache;
     }
 }

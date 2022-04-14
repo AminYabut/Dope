@@ -4,10 +4,11 @@ using UnispectEx.Util;
 
 namespace UnispectEx.Mono {
     public class MonoAppDomain {
-        internal MonoAppDomain(MemoryConnector memory, ulong address) {
+        internal MonoAppDomain(MemoryConnector memory, ulong address, MonoObjectCache cache) {
             Address = address;
 
             _memory = memory;
+            _cache = cache;
         }
 
         internal ulong Address { get; }
@@ -21,14 +22,15 @@ namespace UnispectEx.Mono {
                 if (assembly == 0)
                     continue;
 
-                yield return MonoAssembly.Create(_memory, assembly);
+                yield return MonoAssembly.Create(_memory, assembly, _cache);
             }
         }
 
-        internal static MonoAppDomain? Create(MemoryConnector memory, ulong address) {
-            return new(memory, address);
+        internal static MonoAppDomain? Create(MemoryConnector memory, ulong address, MonoObjectCache cache) {
+            return new(memory, address, cache);
         }
 
         private readonly MemoryConnector _memory;
+        private readonly MonoObjectCache _cache;
     }
 }

@@ -3,17 +3,18 @@ using UnispectEx.Util;
 
 namespace UnispectEx.Mono {
     internal class MonoClassField {
-        private MonoClassField(MemoryConnector memory, ulong address) {
+        private MonoClassField(MemoryConnector memory, ulong address, MonoObjectCache cache) {
             Address = address;
 
             _memory = memory;
+            _cache = cache;
         }
 
         internal ulong Address { get; }
 
-        internal MonoType Type => _type ??= MonoType.Create(_memory, _memory.Read<ulong>(Address + Offsets.MonoClassFieldType));
+        internal MonoType Type => _type ??= MonoType.Create(_memory, _memory.Read<ulong>(Address + Offsets.MonoClassFieldType), _cache);
         internal string Name => _name ??= _memory.ReadString(_memory.Read<ulong>(Address + Offsets.MonoClassFieldName), 255);
-        internal MonoClass Parent => _parent ??= MonoClass.Create(_memory, _memory.Read<ulong>(Address + Offsets.MonoClassFieldParent));
+        internal MonoClass Parent => _parent ??= MonoClass.Create(_memory, _memory.Read<ulong>(Address + Offsets.MonoClassFieldParent), _cache);
         internal int Offset => _offset ??= _memory.Read<int>(Address + Offsets.MonoClassFieldOffset);
 
         internal int Token {
@@ -42,8 +43,17 @@ namespace UnispectEx.Mono {
             }
         }
 
-        internal static MonoClassField Create(MemoryConnector memory, ulong address) {
-            return new(memory, address);
+        internal static MonoClassField Create(MemoryConnector memory, ulong address, MonoObjectCache cache) {
+            lock (cache.MonoClassFieldLockObject) {
+                if (cache.TryGetField(address, out var field))
+                    return field!;
+
+                var result = new MonoClassField(memory, address, cache);
+
+                cache.Cache(address, result);
+
+                return result;
+            }
         }
 
         private MonoType? _type;
@@ -52,5 +62,6 @@ namespace UnispectEx.Mono {
         private int? _offset;
         private int? _token;
         private readonly MemoryConnector _memory;
+        private readonly MonoObjectCache _cache;
     }
 }

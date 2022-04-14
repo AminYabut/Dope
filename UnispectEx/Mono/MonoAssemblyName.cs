@@ -2,10 +2,11 @@
 
 namespace UnispectEx.Mono {
     internal class MonoAssemblyName {
-        private MonoAssemblyName(MemoryConnector memory, ulong address) {
+        private MonoAssemblyName(MemoryConnector memory, ulong address, MonoObjectCache cache) {
             Address = address;
 
             _memory = memory;
+            _cache = cache;
         }
 
         internal ulong Address { get; }
@@ -18,8 +19,17 @@ namespace UnispectEx.Mono {
         internal short? Revision => _revision ??= _memory.Read<short>(Address + Offsets.MonoAssemblyNameRevision);
         internal short? Arch => _arch ??= _memory.Read<short>(Address + Offsets.MonoAssemblyNameArch);
 
-        internal static MonoAssemblyName Create(MemoryConnector memory, ulong address) {
-            return new(memory, address);
+        internal static MonoAssemblyName Create(MemoryConnector memory, ulong address, MonoObjectCache cache) {
+            lock (cache.MonoAssemblyNameLockObject) {
+                if (cache.TryGetAssemblyName(address, out var assemblyName))
+                    return assemblyName!;
+
+                var result = new MonoAssemblyName(memory, address, cache);
+
+                cache.Cache(address, result);
+
+                return result;
+            }
         }
 
         private string? _name;
@@ -29,5 +39,6 @@ namespace UnispectEx.Mono {
         private short? _revision;
         private short? _arch;
         private readonly MemoryConnector _memory;
+        private readonly MonoObjectCache _cache;
     }
 }
