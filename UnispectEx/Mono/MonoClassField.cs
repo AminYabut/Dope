@@ -30,9 +30,10 @@ namespace UnispectEx.Mono {
 
                 uint idx = 0;
                 foreach (var field in parent.Fields()) {
-                    ++idx;
                     if (field.Address == Address)
                         break;
+                    
+                    ++idx;
                 }
 
                 var token = (int) (idx + parent.FirstFieldIdx + 1) | 0x4000000;
