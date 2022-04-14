@@ -4,19 +4,19 @@
         internal const int DomainDomainAssemblies = 0xC8;
 
         // _MonoAssembly
-        internal const int AssemblyName = 0x10;
-        internal const int AssemblyImage = 0x60;
+        internal const int MonoAssemblyName = 0x10;
+        internal const int MonoAssemblyImage = 0x60;
         
         // _MonoImage
-        internal const int ImageClassCache = 0x4C0;
+        internal const int MonoImageClassCache = 0x4C0;
         
         // _MonoAssemblyName
-        internal const int AssemblyNameName = 0x0;
-        internal const int AssemblyNameMajor = 0x40;
-        internal const int AssemblyNameMinor = 0x42;
-        internal const int AssemblyNameBuild = 0x44;
-        internal const int AssemblyNameRevision = 0x46;
-        internal const int AssemblyNameArch = 0x48;
+        internal const int MonoAssemblyNameName = 0x0;
+        internal const int MonoAssemblyNameMajor = 0x40;
+        internal const int MonoAssemblyNameMinor = 0x42;
+        internal const int MonoAssemblyNameBuild = 0x44;
+        internal const int MonoAssemblyNameRevision = 0x46;
+        internal const int MonoAssemblyNameArch = 0x48;
         
         // _MonoClass
         internal const int MonoClassName = 0x48;

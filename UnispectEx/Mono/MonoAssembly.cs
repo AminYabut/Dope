@@ -12,8 +12,8 @@
         internal MonoImage Image { get; private init; }
 
         internal static MonoAssembly Create(Memory memory, ulong address) {
-            var assemblyName = MonoAssemblyName.Create(memory, address + Offsets.AssemblyName);
-            var image = MonoImage.Create(memory, memory.Read<ulong>(address + Offsets.AssemblyImage));
+            var assemblyName = MonoAssemblyName.Create(memory, address + Offsets.MonoAssemblyName);
+            var image = MonoImage.Create(memory, memory.Read<ulong>(address + Offsets.MonoAssemblyImage));
 
             return new(memory, address) {
                 Image = image,

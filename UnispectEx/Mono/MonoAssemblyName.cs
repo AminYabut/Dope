@@ -16,12 +16,12 @@
         internal short Arch { get; private init; }
 
         internal static MonoAssemblyName Create(Memory memory, ulong address) {
-            var name = memory.ReadString(memory.Read<ulong>(address + Offsets.AssemblyNameName), 255);
-            var major = memory.Read<short>(address + Offsets.AssemblyNameMajor);
-            var minor = memory.Read<short>(address + Offsets.AssemblyNameMinor);
-            var build = memory.Read<short>(address + Offsets.AssemblyNameBuild);
-            var revision = memory.Read<short>(address + Offsets.AssemblyNameRevision);
-            var arch = memory.Read<short>(address + Offsets.AssemblyNameArch);
+            var name = memory.ReadString(memory.Read<ulong>(address + Offsets.MonoAssemblyNameName), 255);
+            var major = memory.Read<short>(address + Offsets.MonoAssemblyNameMajor);
+            var minor = memory.Read<short>(address + Offsets.MonoAssemblyNameMinor);
+            var build = memory.Read<short>(address + Offsets.MonoAssemblyNameBuild);
+            var revision = memory.Read<short>(address + Offsets.MonoAssemblyNameRevision);
+            var arch = memory.Read<short>(address + Offsets.MonoAssemblyNameArch);
 
             return new(memory, address) {
                 Name = name,

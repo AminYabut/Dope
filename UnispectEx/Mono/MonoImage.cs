@@ -11,7 +11,7 @@ namespace UnispectEx.Mono {
         internal ulong Address { get; }
 
         internal IEnumerable<MonoClass> Types() {
-            var cacheAddress = Address + Offsets.ImageClassCache;
+            var cacheAddress = Address + Offsets.MonoImageClassCache;
 
             var size = _memory.Read<int>(cacheAddress + Offsets.HashTableSize);
             var table = _memory.Read<ulong>(cacheAddress + Offsets.HashTableTable);
