@@ -30,6 +30,9 @@
         internal const int MonoClassFieldParent = 0x10;
         internal const int MonoClassFieldOffset = 0x18;
         
+        // _MonoType
+        internal const int MonoTypeData = 0x0;
+        
         // _MonoInternalHashTable
         internal const int HashTableNext = 0x10;
         internal const int HashTableSize = 0x18;

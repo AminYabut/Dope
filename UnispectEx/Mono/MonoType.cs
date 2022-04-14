@@ -8,8 +8,14 @@
 
         internal ulong Address { get; }
 
+        internal MonoClass MonoClass { get; private init; }
+
         internal static MonoType Create(Memory memory, ulong address) {
-            return new(memory, address);
+            var monoClass = MonoClass.Create(memory, memory.Read<ulong>(address + Offsets.MonoTypeData));
+
+            return new(memory, address) {
+                MonoClass = monoClass
+            };
         }
 
         private readonly Memory _memory;
