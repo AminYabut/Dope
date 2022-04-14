@@ -5,13 +5,13 @@ using UnispectEx.Pe;
 using UnispectEx.Pe.Constants;
 using UnispectEx.Util;
 
-namespace UnispectEx {
-    internal class Inspector {
-        internal Inspector(MemoryConnector memory) {
+namespace UnispectEx.Inspector {
+    internal class MonoProcess {
+        internal MonoProcess(MemoryConnector memory) {
             _memory = memory;
         }
 
-        internal MonoAppDomain AppDomain { get; private set; }
+        internal MonoAppDomain Domain { get; private set; }
 
         internal bool Initialize(string monoDll) {
             var domain = GetRootDomain(monoDll);
@@ -19,7 +19,7 @@ namespace UnispectEx {
             if (domain == null)
                 return false;
 
-            AppDomain = domain;
+            Domain = domain;
 
             return true;
         }
