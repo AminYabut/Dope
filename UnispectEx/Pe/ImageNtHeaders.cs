@@ -11,7 +11,7 @@ namespace UnispectEx.Pe {
         internal ImageFileHeader FileHeader { get; private init; }
         internal ImageOptionalHeader OptionalHeader { get; private init; }
 
-        internal static ImageNtHeaders Create(Memory memory, ulong address) {
+        internal static ImageNtHeaders Create(MemoryConnector memory, ulong address) {
             var reader = new MemoryReader(memory, address);
 
             var signature = reader.U32();

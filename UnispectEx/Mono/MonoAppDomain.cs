@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 
+using UnispectEx.Util;
+
 namespace UnispectEx.Mono {
     public class MonoAppDomain {
-        internal MonoAppDomain(Memory memory, ulong address) {
+        internal MonoAppDomain(MemoryConnector memory, ulong address) {
             Address = address;
 
             _memory = memory;
@@ -23,10 +25,10 @@ namespace UnispectEx.Mono {
             }
         }
 
-        internal static MonoAppDomain Create(Memory memory, ulong address) {
+        internal static MonoAppDomain Create(MemoryConnector memory, ulong address) {
             return new(memory, address);
         }
 
-        private readonly Memory _memory;
+        private readonly MemoryConnector _memory;
     }
 }

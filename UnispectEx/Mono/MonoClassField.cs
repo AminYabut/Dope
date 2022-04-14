@@ -1,13 +1,14 @@
 ﻿using System;
+using UnispectEx.Util;
 
 namespace UnispectEx.Mono {
     internal class MonoClassField {
-        private MonoClassField(Memory memory, ulong address) {
+        private MonoClassField(MemoryConnector memory, ulong address) {
             Address = address;
-            
+
             _memory = memory;
         }
-        
+
         internal ulong Address { get; }
 
         internal MonoType Type { get; private init; }
@@ -19,7 +20,7 @@ namespace UnispectEx.Mono {
             get {
                 if (_token.HasValue)
                     return _token.Value;
-                
+
                 var parent = Parent;
                 var fieldCount = parent.FieldCount;
 
@@ -32,22 +33,22 @@ namespace UnispectEx.Mono {
                     if (field.Address == Address)
                         break;
                 }
-                
+
                 var token = (int) (idx + parent.FirstFieldIdx + 1) | 0x4000000;
-                
+
                 _token = token;
 
                 return token;
             }
         }
 
-        internal static MonoClassField Create(Memory memory, ulong address) {
+        internal static MonoClassField Create(MemoryConnector memory, ulong address) {
             var type = MonoType.Create(memory, memory.Read<ulong>(address + Offsets.MonoClassFieldType));
             var name = memory.ReadString(memory.Read<ulong>(address + Offsets.MonoClassFieldName), 255);
             var parent = MonoClass.Create(memory, memory.Read<ulong>(address + Offsets.MonoClassFieldParent));
             var offset = memory.Read<int>(address + Offsets.MonoClassFieldOffset);
 
-            return new (memory, address) {
+            return new(memory, address) {
                 Type = type,
                 Name = name,
                 Parent = parent,
@@ -56,6 +57,6 @@ namespace UnispectEx.Mono {
         }
 
         private int? _token;
-        private readonly Memory _memory;
+        private readonly MemoryConnector _memory;
     }
 }

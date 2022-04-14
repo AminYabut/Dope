@@ -2,7 +2,7 @@
 
 namespace UnispectEx.Util {
     internal class MemoryReader {
-        internal MemoryReader(Memory memory, ulong baseOffset) {
+        internal MemoryReader(MemoryConnector memory, ulong baseOffset) {
             _memory = memory;
             _baseOffset = baseOffset;
         }
@@ -70,7 +70,7 @@ namespace UnispectEx.Util {
         private ulong _offset;
         private readonly ulong _baseOffset;
 
-        private readonly Memory _memory;
+        private readonly MemoryConnector _memory;
         private readonly object _lock = new ();
     }
 }

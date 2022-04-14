@@ -11,7 +11,7 @@ namespace UnispectEx.Pe.DataDirectories {
         internal uint AddressOfNames { get; private init; }
         internal uint AddressOfNameOrdinals { get; private init; }
 
-        internal static ImageExportDirectory Create(Memory memory, ulong address) {
+        internal static ImageExportDirectory Create(MemoryConnector memory, ulong address) {
             var reader = new MemoryReader(memory, address);
 
             var characteristics = reader.U32();

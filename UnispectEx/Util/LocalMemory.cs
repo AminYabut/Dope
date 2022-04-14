@@ -3,8 +3,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace UnispectEx {
-    internal class LocalMemory : Memory {
+namespace UnispectEx.Util {
+    internal class LocalMemory : MemoryConnector {
         internal override bool Attach(string name) {
             var processes = Process.GetProcessesByName(name);
 

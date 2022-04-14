@@ -9,7 +9,7 @@ namespace UnispectEx.Pe {
         internal ushort OptionalHeaderSize { get; private init; }
         internal ushort Characteristics { get; private init; }
 
-        internal static ImageFileHeader Create(Memory memory, ulong address) {
+        internal static ImageFileHeader Create(MemoryConnector memory, ulong address) {
             var reader = new MemoryReader(memory, address);
 
             var machine = reader.U16();

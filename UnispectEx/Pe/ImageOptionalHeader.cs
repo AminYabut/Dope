@@ -7,7 +7,7 @@ namespace UnispectEx.Pe {
         internal ushort Magic { get; private init; } 
         internal ImageDataDirectory[] DataDirectories { get; private init; }
 
-        internal static ImageOptionalHeader Create(Memory memory, ulong address, bool is32) {
+        internal static ImageOptionalHeader Create(MemoryConnector memory, ulong address, bool is32) {
             var reader = new MemoryReader(memory, address);
 
             var magic = reader.U16();

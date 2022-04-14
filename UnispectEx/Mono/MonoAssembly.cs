@@ -1,6 +1,8 @@
-﻿namespace UnispectEx.Mono {
+﻿using UnispectEx.Util;
+
+namespace UnispectEx.Mono {
     internal class MonoAssembly {
-        private MonoAssembly(Memory memory, ulong address) {
+        private MonoAssembly(MemoryConnector memory, ulong address) {
             Address = address;
 
             _memory = memory;
@@ -11,7 +13,7 @@
         internal MonoAssemblyName AssemblyName { get; private init; }
         internal MonoImage Image { get; private init; }
 
-        internal static MonoAssembly Create(Memory memory, ulong address) {
+        internal static MonoAssembly Create(MemoryConnector memory, ulong address) {
             var assemblyName = MonoAssemblyName.Create(memory, address + Offsets.MonoAssemblyName);
             var image = MonoImage.Create(memory, memory.Read<ulong>(address + Offsets.MonoAssemblyImage));
 
@@ -21,6 +23,6 @@
             };
         }
 
-        private readonly Memory _memory;
+        private readonly MemoryConnector _memory;
     }
 }

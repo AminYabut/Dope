@@ -1,4 +1,5 @@
 ﻿using System;
+
 using UnispectEx.Pe.Constants;
 using UnispectEx.Util;
 
@@ -9,7 +10,7 @@ namespace UnispectEx.Pe {
         internal ushort Magic { private get; init; }
         internal uint NtHeadersOffset { get; private init; }
 
-        internal static ImageDosHeader Create(Memory memory, ulong address) {
+        internal static ImageDosHeader Create(MemoryConnector memory, ulong address) {
             var reader = new MemoryReader(memory, address);
 
             var magic = reader.U16();

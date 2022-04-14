@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using UnispectEx.Util;
 
 namespace UnispectEx.Mono {
     internal class MonoImage {
-        private MonoImage(Memory memory, ulong address) {
+        private MonoImage(MemoryConnector memory, ulong address) {
             Address = address;
 
             _memory = memory;
@@ -25,10 +26,10 @@ namespace UnispectEx.Mono {
             }
         }
 
-        internal static MonoImage Create(Memory memory, ulong address) {
+        internal static MonoImage Create(MemoryConnector memory, ulong address) {
             return new(memory, address);
         }
 
-        private readonly Memory _memory;
+        private readonly MemoryConnector _memory;
     }
 }

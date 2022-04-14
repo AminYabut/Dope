@@ -4,7 +4,7 @@
             Name = name;
             Rva = rva;
         }
-        
+
         internal string Name { get; }
         internal uint Rva { get; }
     }

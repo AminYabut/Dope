@@ -3,10 +3,11 @@ using System.Text;
 using UnispectEx.Pe.Constants;
 using UnispectEx.Pe.DataDirectories;
 using UnispectEx.Pe.Models;
+using UnispectEx.Util;
 
 namespace UnispectEx.Pe {
     internal class PeFile {
-        private PeFile(Memory memory) {
+        private PeFile(MemoryConnector memory) {
             _memory = memory;
         }
 
@@ -50,7 +51,7 @@ namespace UnispectEx.Pe {
             return dataDirectories[(uint) id];
         }
 
-        internal static PeFile Create(Memory memory, ulong address) {
+        internal static PeFile Create(MemoryConnector memory, ulong address) {
             var dosHeader = ImageDosHeader.Create(memory, address);
             var ntHeaders = ImageNtHeaders.Create(memory, address + dosHeader.NtHeadersOffset);
 
@@ -61,6 +62,6 @@ namespace UnispectEx.Pe {
             };
         }
 
-        private readonly Memory _memory;
+        private readonly MemoryConnector _memory;
     }
 }

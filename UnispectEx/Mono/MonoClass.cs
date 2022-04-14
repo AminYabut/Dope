@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnispectEx.Util;
 
 namespace UnispectEx.Mono {
     internal class MonoClass {
-        private MonoClass(Memory memory, ulong address) {
+        private MonoClass(MemoryConnector memory, ulong address) {
             Address = address;
 
             _memory = memory;
@@ -30,7 +31,7 @@ namespace UnispectEx.Mono {
                 yield return MonoClassField.Create(_memory, fields + i * 0x20);
         }
 
-        internal static MonoClass Create(Memory memory, ulong address) {
+        internal static MonoClass Create(MemoryConnector memory, ulong address) {
             var name = memory.ReadString(memory.Read<ulong>(address + Offsets.MonoClassName), 255);
             var namespaceName = memory.ReadString(memory.Read<ulong>(address + Offsets.MonoClassNamespace), 255);
 
@@ -45,6 +46,6 @@ namespace UnispectEx.Mono {
         private uint? _firstFieldIdx;
         private uint? _methodCount;
         private uint? _fieldCount;
-        private readonly Memory _memory;
+        private readonly MemoryConnector _memory;
     }
 }

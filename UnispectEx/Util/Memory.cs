@@ -2,8 +2,8 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace UnispectEx {
-    internal abstract class Memory {
+namespace UnispectEx.Util {
+    internal abstract class MemoryConnector {
         internal abstract bool Attach(string name);
         internal abstract bool Attach(int pid);
 

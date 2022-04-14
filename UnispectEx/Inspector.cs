@@ -1,14 +1,16 @@
 ﻿using System;
+
 using UnispectEx.Mono;
 using UnispectEx.Pe;
 using UnispectEx.Pe.Constants;
+using UnispectEx.Util;
 
 namespace UnispectEx {
     internal class Inspector {
-        internal Inspector(Memory memory) {
+        internal Inspector(MemoryConnector memory) {
             _memory = memory;
         }
-        
+
         internal MonoAppDomain AppDomain { get; private set; }
 
         internal bool Initialize(string monoDll) {
@@ -18,7 +20,7 @@ namespace UnispectEx {
                 return false;
 
             AppDomain = domain;
-            
+
             return true;
         }
 
@@ -32,8 +34,7 @@ namespace UnispectEx {
 
             try {
                 mono = PeFile.Create(_memory, dll);
-            }
-            catch (InvalidOperationException exception) {
+            } catch (InvalidOperationException exception) {
                 return null;
             }
 
@@ -54,7 +55,7 @@ namespace UnispectEx {
 
             return MonoAppDomain.Create(_memory, domain);
         }
-        
-        private readonly Memory _memory;
+
+        private readonly MemoryConnector _memory;
     }
 }
