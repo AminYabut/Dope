@@ -17,8 +17,8 @@ namespace UnispectEx.Mono {
         internal string Name { get; private init; }
         internal string Namespace { get; private init; }
 
-        internal uint FirstMethodIdx => _firstMethodIdx ??= _memory.Read<uint>(Address + 0xF8);
-        internal uint FirstFieldIdx => _firstFieldIdx ??= _memory.Read<uint>(Address + 0xF8);
+        internal uint FirstMethodIdx => _firstMethodIdx ??= _memory.Read<uint>(Address + Offsets.MonoClassDefFirstMethodIdx);
+        internal uint FirstFieldIdx => _firstFieldIdx ??= _memory.Read<uint>(Address + Offsets.MonoClassDefFirstFieldIdx);
 
         internal uint MethodCount => _methodCount ??= _memory.Read<uint>(Address + Offsets.MonoClassDefMethodCount);
         internal uint FieldCount => _fieldCount ??= _memory.Read<uint>(Address + Offsets.MonoClassDefFieldCount);
