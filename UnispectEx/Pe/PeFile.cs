@@ -7,15 +7,15 @@ using UnispectEx.Util;
 
 namespace UnispectEx.Pe {
     internal class PeFile {
-        private PeFile(MemoryConnector memory, ulong baseAddress, ImageDosHeader dosHeader, ImageNtHeaders ntHeaders) {
+        private PeFile(MemoryConnector memory, ulong address, ImageDosHeader dosHeader, ImageNtHeaders ntHeaders) {
             _memory = memory;
 
-            BaseAddress = baseAddress;
+            Address = address;
             DosHeader = dosHeader;
             NtHeaders = ntHeaders;
         }
 
-        internal ulong BaseAddress { get; }
+        internal ulong Address { get; }
         internal ImageDosHeader DosHeader { get; }
         internal ImageNtHeaders NtHeaders { get; }
 
@@ -28,21 +28,21 @@ namespace UnispectEx.Pe {
             if (directoryEntry.VirtualAddress == 0 || directoryEntry.Size == 0)
                 return 0;
 
-            var directory = ImageExportDirectory.Create(_memory, BaseAddress + directoryEntry.VirtualAddress);
+            var directory = ImageExportDirectory.Create(_memory, Address + directoryEntry.VirtualAddress);
 
             for (uint i = 0; i < directory.NamesCount; ++i) {
-                var nameAddress = _memory.Read<uint>(BaseAddress + directory.AddressOfNames + i * 0x4);
+                var nameAddress = _memory.Read<uint>(Address + directory.AddressOfNames + i * 0x4);
 
-                if (!_memory.ReadBytes(BaseAddress + nameAddress, out var buffer, 255))
+                if (!_memory.ReadBytes(Address + nameAddress, out var buffer, 255))
                     return 0;
 
                 // TODO: calculate size dynamically
                 var functionName = Encoding.ASCII.GetString(new Span<byte>(buffer, 0, Array.IndexOf(buffer, (byte) 0)));
 
                 if (functionName == name) {
-                    var offset = _memory.Read<ushort>(BaseAddress + directory.AddressOfNameOrdinals + i * 2);
+                    var offset = _memory.Read<ushort>(Address + directory.AddressOfNameOrdinals + i * 2);
 
-                    return BaseAddress + _memory.Read<uint>(BaseAddress + directory.AddressOfFunctions + (uint) offset * 4);
+                    return Address + _memory.Read<uint>(Address + directory.AddressOfFunctions + (uint) offset * 4);
                 }
             }
 
