@@ -5,10 +5,13 @@ using UnispectEx.Util;
 
 namespace UnispectEx.Pe {
     internal class ImageDosHeader {
-        private ImageDosHeader() { }
-        
-        internal ushort Magic { private get; init; }
-        internal uint NtHeadersOffset { get; private init; }
+        private ImageDosHeader(ushort magic, uint ntHeadersOffset) {
+            Magic = magic;
+            NtHeadersOffset = ntHeadersOffset;
+        }
+
+        internal ushort Magic { get; }
+        internal uint NtHeadersOffset { get; }
 
         internal static ImageDosHeader Create(MemoryConnector memory, ulong address) {
             var reader = new MemoryReader(memory, address);
@@ -19,11 +22,8 @@ namespace UnispectEx.Pe {
                 throw new InvalidOperationException("dos header invalid!");
 
             reader.Seek(0x3C);
-            
-            return new() {
-                Magic = magic,
-                NtHeadersOffset = reader.U32()
-            };
+
+            return new(magic, reader.U32());
         }
     }
 }

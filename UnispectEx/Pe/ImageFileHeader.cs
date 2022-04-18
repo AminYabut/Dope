@@ -2,12 +2,21 @@
 
 namespace UnispectEx.Pe {
     internal class ImageFileHeader {
-        private ImageFileHeader() { }
-        
-        internal ushort Machine { get; private init; }
-        internal ushort SectionCount { get; private init; }
-        internal ushort OptionalHeaderSize { get; private init; }
-        internal ushort Characteristics { get; private init; }
+        private ImageFileHeader(
+            ushort machine,
+            ushort sectionCount,
+            ushort optionalHeaderSize,
+            ushort characteristics) {
+            Machine = machine;
+            SectionCount = sectionCount;
+            OptionalHeaderSize = optionalHeaderSize;
+            Characteristics = characteristics;
+        }
+
+        internal ushort Machine { get; }
+        internal ushort SectionCount { get; }
+        internal ushort OptionalHeaderSize { get; }
+        internal ushort Characteristics { get; }
 
         internal static ImageFileHeader Create(MemoryConnector memory, ulong address) {
             var reader = new MemoryReader(memory, address);
@@ -20,12 +29,7 @@ namespace UnispectEx.Pe {
             var optionalHeaderSize = reader.U16();
             var characteristics = reader.U16();
 
-            return new() {
-                Machine = machine,
-                SectionCount = sectionCount,
-                OptionalHeaderSize = optionalHeaderSize,
-                Characteristics = characteristics
-            };
+            return new(machine, sectionCount, optionalHeaderSize, characteristics);
         }
     }
 }
