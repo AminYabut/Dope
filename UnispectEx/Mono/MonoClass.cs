@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 using UnispectEx.Util;
 
 namespace UnispectEx.Mono {

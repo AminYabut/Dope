@@ -6,8 +6,8 @@ using UnispectEx.Pe.Constants;
 using UnispectEx.Util;
 
 namespace UnispectEx.Inspector {
-    internal class MonoProcess {
-        internal MonoProcess(MemoryConnector memory) {
+    internal class UnityProcess {
+        internal UnityProcess(MemoryConnector memory) {
             _memory = memory;
         }
 

@@ -1,44 +1,57 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Linq;
+
+using dnlib.DotNet;
+
 using UnispectEx.Inspector;
 using UnispectEx.Util;
 
 namespace UnispectEx {
     internal static class Program {
+        private static bool DumpAndSerialize(ImmutableList<MetadataContainer> containers, string outputDirectory) {
+            var processor = new DefaultDumpProcessor();
+            if (!processor.Initialize(containers))
+                return false;
+
+            if (!processor.Mark())
+                return false;
+
+            if (!processor.Serialize(new DefaultSerializer()))
+                return false;
+
+            return processor.Write(containers, AppContext.BaseDirectory);
+        }
+
         internal static void Main(string[] args) {
+            if (args.Length != 2) {
+                Console.WriteLine("[*] UnispectEx <process> <Assembly-CSharp.dll path>");
+
+                return;
+            }
+
+            var processName = args[0];
+            var assemblyPath = args[1];
+
             var memory = new LocalMemory();
 
-            if (!memory.Attach("Unturned"))
+            if (!memory.Attach(processName))
                 return;
 
-            var inspector = new MonoProcess(memory);
+            var inspector = new UnityProcess(memory);
 
             if (!inspector.Initialize("mono-2.0-bdwgc.dll"))
                 return;
 
-            foreach (var assembly in inspector.Domain.GetAssemblies()) {
-                Console.WriteLine($"assembly: {assembly.AssemblyName.Name}");
+            var assembly = inspector.Domain!.GetAssemblies().FirstOrDefault(x => x.AssemblyName.Name == "Assembly-CSharp")!;
+            var module = ModuleDefMD.Load(assemblyPath);
 
-                if (assembly.AssemblyName.Name != "Assembly-CSharp")
-                    continue;
+            var correlatedClasses = Helpers.CorrelateClasses(module.GetTypes(), assembly.Image.Types());
+            var containers = correlatedClasses.Select(x => new MetadataContainer(x.Item1, x.Item2)).ToImmutableList();
 
-                foreach (var type in assembly.Image.Types()) {
-                    if (type.FullName != "SDG.Unturned.Dedicator")
-                        continue;
-
-                    foreach (var field in type.Fields()) {
-                        var fieldTypeClassName = field.Type.MonoClass.Name;
-
-                        var token = field.Token;
-
-                        if (field.Name != string.Empty) {
-                            Console.WriteLine($"field: {field.Name}:{field.Offset}");
-                        }
-                    }
-                }
-            }
-
-            Console.ReadKey();
+            Console.WriteLine(DumpAndSerialize(containers, AppContext.BaseDirectory)
+                ? "[*] Successfully dumped and serialized!"
+                : "[-] Failed to dump and serialize!");
         }
     }
 }

@@ -39,7 +39,7 @@ namespace UnispectEx.Util {
         }
 
         internal override ulong GetModule(string name) {
-            if (_process == null)
+            if (_process is null)
                 return 0;
 
             foreach (ProcessModule module in _process.Modules) {
@@ -56,14 +56,14 @@ namespace UnispectEx.Util {
 
             fixed (byte* pointer = result) {
                 if (!ReadProcessMemory(_handle, (nuint) address, pointer, (nuint) size, out _)) {
-                    buffer = null;
+                    buffer = null!;
 
                     return false;
                 }
             }
 
             buffer = result;
-            
+
             return true;
         }
 
@@ -88,7 +88,7 @@ namespace UnispectEx.Util {
         [DllImport("kernel32.dll")]
         private static extern unsafe bool WriteProcessMemory(UIntPtr handle, nuint address, byte* buffer, nuint size, out nuint bytesWritten);
 
-        private Process _process;
+        private Process? _process;
         private UIntPtr _handle = UIntPtr.Zero;
     }
 }
