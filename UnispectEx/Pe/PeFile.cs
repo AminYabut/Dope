@@ -7,16 +7,23 @@ using UnispectEx.Util;
 
 namespace UnispectEx.Pe {
     internal class PeFile {
-        private PeFile(MemoryConnector memory) {
+        private PeFile(MemoryConnector memory, ulong baseAddress, ImageDosHeader dosHeader, ImageNtHeaders ntHeaders) {
             _memory = memory;
+
+            BaseAddress = baseAddress;
+            DosHeader = dosHeader;
+            NtHeaders = ntHeaders;
         }
 
-        internal ulong BaseAddress { get; private init; }
-        internal ImageDosHeader DosHeader { get; private init; }
-        internal ImageNtHeaders NtHeaders { get; private init; }
+        internal ulong BaseAddress { get; }
+        internal ImageDosHeader DosHeader { get; }
+        internal ImageNtHeaders NtHeaders { get; }
 
         internal ulong GetExport(string name) {
             var directoryEntry = GetDataDirectory(DataDirectory.Export);
+
+            if (directoryEntry is null)
+                return 0;
 
             if (directoryEntry.VirtualAddress == 0 || directoryEntry.Size == 0)
                 return 0;
@@ -42,24 +49,17 @@ namespace UnispectEx.Pe {
             return 0;
         }
 
-        internal ImageDataDirectory GetDataDirectory(DataDirectory id) {
+        internal ImageDataDirectory? GetDataDirectory(DataDirectory id) {
             var dataDirectories = NtHeaders.OptionalHeader.DataDirectories;
 
-            if (dataDirectories.Length < (uint) id)
-                return null;
-
-            return dataDirectories[(uint) id];
+            return dataDirectories.Length < (uint) id ? null : dataDirectories[(uint) id];
         }
 
         internal static PeFile Create(MemoryConnector memory, ulong address) {
             var dosHeader = ImageDosHeader.Create(memory, address);
             var ntHeaders = ImageNtHeaders.Create(memory, address + dosHeader.NtHeadersOffset);
 
-            return new(memory) {
-                BaseAddress = address,
-                DosHeader = dosHeader,
-                NtHeaders = ntHeaders
-            };
+            return new(memory, address, dosHeader, ntHeaders);
         }
 
         private readonly MemoryConnector _memory;

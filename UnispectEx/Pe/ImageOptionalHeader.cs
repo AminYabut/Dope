@@ -2,10 +2,13 @@
 
 namespace UnispectEx.Pe {
     internal class ImageOptionalHeader {
-        private ImageOptionalHeader() { }
+        private ImageOptionalHeader(ushort magic, ImageDataDirectory[] dataDirectories) {
+            Magic = magic;
+            DataDirectories = dataDirectories;
+        }
 
-        internal ushort Magic { get; private init; } 
-        internal ImageDataDirectory[] DataDirectories { get; private init; }
+        internal ushort Magic { get; } 
+        internal ImageDataDirectory[] DataDirectories { get; }
 
         internal static ImageOptionalHeader Create(MemoryConnector memory, ulong address, bool is32) {
             var reader = new MemoryReader(memory, address);
@@ -23,10 +26,7 @@ namespace UnispectEx.Pe {
                 };
             }
 
-            return new() {
-                Magic = magic,
-                DataDirectories = dataDirectories
-            };
+            return new(magic, dataDirectories);
         }
     }
 }

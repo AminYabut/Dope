@@ -5,11 +5,15 @@ using UnispectEx.Util;
 
 namespace UnispectEx.Pe {
     internal class ImageNtHeaders {
-        private ImageNtHeaders() { }
+        private ImageNtHeaders(uint signature, ImageFileHeader fileHeader, ImageOptionalHeader optionalHeader) {
+            Signature = signature;
+            FileHeader = fileHeader;
+            OptionalHeader = optionalHeader;
+        }
         
-        internal uint Signature { get; private init; }
-        internal ImageFileHeader FileHeader { get; private init; }
-        internal ImageOptionalHeader OptionalHeader { get; private init; }
+        internal uint Signature { get; }
+        internal ImageFileHeader FileHeader { get; }
+        internal ImageOptionalHeader OptionalHeader { get; }
 
         internal static ImageNtHeaders Create(MemoryConnector memory, ulong address) {
             var reader = new MemoryReader(memory, address);
@@ -25,11 +29,7 @@ namespace UnispectEx.Pe {
                 address + sizeof(uint) + ImageConstants.FileHeaderSize,
                 fileHeader.Machine == ImageConstants.MachineI386);
 
-            return new() {
-                Signature = signature,
-                FileHeader = fileHeader,
-                OptionalHeader = optionalHeader
-            };
+            return new(signature, fileHeader, optionalHeader);
         }
     }
 }
