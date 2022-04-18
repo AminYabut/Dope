@@ -24,11 +24,20 @@ namespace UnispectEx.Inspector {
             writer.WriteLine("---");
             writer.WriteLine($"class: {metadataContainer.MonoClass.FullName}");
             writer.WriteLine($"parents: {BaseTypes(metadataContainer.TypeDef)}");
-            
+
             foreach (var metadataFieldContainer in metadataContainer.Fields) {
                 var fieldDef = metadataFieldContainer.FieldDef;
+                var monoClassField = metadataFieldContainer.MonoClassField;
 
-                writer.WriteLine($"  - {fieldDef.Name}:0x{fieldDef.MDToken.ToInt32():X} | {fieldDef.FieldType.FullName}");
+                string tag;
+                if (fieldDef.IsLiteral)
+                    tag = "[C]";
+                else if (fieldDef.IsStatic)
+                    tag = "[S]";
+                else
+                    tag = "[I]";
+
+                writer.WriteLine($"  - {tag} {fieldDef.Name}:0x{fieldDef.MDToken.ToInt32():X} | 0x{monoClassField.Offset:X} | {fieldDef.FieldType.FullName}");
             }
 
             writer.Flush();
