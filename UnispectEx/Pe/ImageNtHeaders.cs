@@ -23,7 +23,7 @@ namespace UnispectEx.Pe {
             if (signature != ImageConstants.NtSignature)
                 throw new InvalidOperationException("dos header invalid!");
 
-            var fileHeader = ImageFileHeader.Create(memory, address + 4);
+            var fileHeader = ImageFileHeader.Create(memory, address + 0x4);
             var optionalHeader = ImageOptionalHeader.Create(
                 memory,
                 address + sizeof(uint) + ImageConstants.FileHeaderSize,

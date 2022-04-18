@@ -28,7 +28,7 @@ namespace UnispectEx.Pe.DataDirectories {
 
             var characteristics = reader.U32();
 
-            reader.Seek(20);
+            reader.Seek(0x14);
 
             var functionCount = reader.U32();
             var namesCount = reader.U32();

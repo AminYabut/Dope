@@ -24,7 +24,7 @@ namespace UnispectEx.Pe {
             var machine = reader.U16();
             var sectionCount = reader.U16();
 
-            reader.Seek(reader.Tell() + 12);
+            reader.Seek(reader.Tell() + 0xC);
 
             var optionalHeaderSize = reader.U16();
             var characteristics = reader.U16();
