@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
+
 using UnispectEx.Pe.Constants;
 using UnispectEx.Pe.DataDirectories;
-using UnispectEx.Pe.Models;
 using UnispectEx.Util;
 
 namespace UnispectEx.Pe {
