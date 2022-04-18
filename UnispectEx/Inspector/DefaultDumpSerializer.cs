@@ -3,7 +3,7 @@ using System.Text;
 using dnlib.DotNet;
 
 namespace UnispectEx.Inspector {
-    internal class DefaultSerializer : IDumpSerializer {
+    internal class DefaultDumpSerializer : IDumpSerializer {
         private string BaseTypes(TypeDef typeDef) {
             var builder = new StringBuilder();
 
