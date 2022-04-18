@@ -34,7 +34,10 @@ namespace UnispectEx.Inspector {
 
             try {
                 mono = PeFile.Create(_memory, dll);
-            } catch (InvalidOperationException exception) {
+            } catch (Exception exception) {
+                if (exception is not InvalidOperationException)
+                    throw;
+                
                 return null;
             }
 
