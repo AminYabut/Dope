@@ -20,11 +20,11 @@ namespace UnispectEx.Inspector {
             Fields = fields.ToImmutableList();
         }
 
-        internal bool Export { get; set; }
-
         internal TypeDef TypeDef { get; }
         internal MonoClass MonoClass { get; }
 
         internal ImmutableList<MetadataFieldContainer> Fields { get; }
+
+        internal bool Export { get; set; }
     }
 }
