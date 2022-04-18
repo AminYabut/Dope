@@ -2,14 +2,26 @@
 
 namespace UnispectEx.Pe.DataDirectories {
     internal class ImageExportDirectory : IDataDirectory {
-        private ImageExportDirectory() { }
+        private ImageExportDirectory(
+            uint functionCount,
+            uint namesCount,
+            uint addressOfFunctions,
+            uint addressOfNames,
+            uint addressOfNameOrdinals) {
+            FunctionCount = functionCount;
+            NamesCount = namesCount;
 
-        internal uint FunctionCount { get; private init; }
-        internal uint NamesCount { get; private init; }
+            AddressOfFunctions = addressOfFunctions;
+            AddressOfNames = addressOfNames;
+            AddressOfNameOrdinals = addressOfNameOrdinals;
+        }
 
-        internal uint AddressOfFunctions { get; private init; }
-        internal uint AddressOfNames { get; private init; }
-        internal uint AddressOfNameOrdinals { get; private init; }
+        internal uint FunctionCount { get; }
+        internal uint NamesCount { get; }
+
+        internal uint AddressOfFunctions { get; }
+        internal uint AddressOfNames { get; }
+        internal uint AddressOfNameOrdinals { get; }
 
         internal static ImageExportDirectory Create(MemoryConnector memory, ulong address) {
             var reader = new MemoryReader(memory, address);
@@ -25,13 +37,7 @@ namespace UnispectEx.Pe.DataDirectories {
             var addressOfNames = reader.U32();
             var addressOfNameOrdinals = reader.U32();
 
-            return new() {
-                FunctionCount = functionCount,
-                NamesCount = namesCount,
-                AddressOfFunctions = addressOfFunctions,
-                AddressOfNames = addressOfNames,
-                AddressOfNameOrdinals = addressOfNameOrdinals
-            };
+            return new(functionCount, namesCount, addressOfFunctions, addressOfNames, addressOfNameOrdinals);
         }
     }
 }
