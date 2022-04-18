@@ -8,11 +8,11 @@ using UnispectEx.Util;
 namespace UnispectEx.Pe {
     internal class PeFile {
         private PeFile(MemoryConnector memory, ulong address, ImageDosHeader dosHeader, ImageNtHeaders ntHeaders) {
-            _memory = memory;
-
             Address = address;
             DosHeader = dosHeader;
             NtHeaders = ntHeaders;
+            
+            _memory = memory;
         }
 
         internal ulong Address { get; }
