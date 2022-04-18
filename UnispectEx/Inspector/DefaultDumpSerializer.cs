@@ -27,6 +27,9 @@ namespace UnispectEx.Inspector {
             writer.WriteLine($"parents: {BaseTypes(metadataContainer.TypeDef)}");
 
             foreach (var metadataFieldContainer in metadataContainer.Fields) {
+                if (!metadataContainer.Export)
+                    continue;
+
                 var fieldDef = metadataFieldContainer.FieldDef;
                 var monoClassField = metadataFieldContainer.MonoClassField;
 
