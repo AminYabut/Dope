@@ -46,11 +46,12 @@ namespace UnispectEx {
             var correlatedClasses = Helpers.CorrelateClasses(module.GetTypes(), assembly.Image.Types());
             var containers = correlatedClasses.Select(x => new MetadataContainer(x.Item1, x.Item2)).ToImmutableList();
 
-            foreach (var metadataContainer in containers) {
-                metadataContainer.Export = true;
+            var analyzer = new DefaultDumpAnalyzer();
 
-                foreach (var metadataFieldContainer in metadataContainer.Fields)
-                    metadataFieldContainer.Export = true;
+            if (!analyzer.Analyze(containers)) {
+                Console.WriteLine("[-] Analysis failed!");
+
+                return;
             }
 
             Console.WriteLine(ProcessAndSerialize(containers, AppContext.BaseDirectory)
