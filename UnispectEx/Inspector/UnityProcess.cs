@@ -41,11 +41,6 @@ namespace UnispectEx.Inspector {
                 return null;
             }
 
-            var directory = mono.GetDataDirectory(DataDirectory.Export);
-
-            if (directory.VirtualAddress == 0 || directory.Size == 0)
-                return null;
-
             var export = mono.GetExport("mono_get_root_domain");
 
             if (export == 0)
