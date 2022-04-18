@@ -4,8 +4,8 @@ using System.Linq;
 
 using dnlib.DotNet;
 
-using UnispectEx.Inspector;
-using UnispectEx.Util;
+using UnispectEx.Core.Inspector;
+using UnispectEx.Core.Util;
 
 namespace UnispectEx {
     internal static class Program {
@@ -45,6 +45,13 @@ namespace UnispectEx {
 
             var correlatedClasses = Helpers.CorrelateClasses(module.GetTypes(), assembly.Image.Types());
             var containers = correlatedClasses.Select(x => new MetadataContainer(x.Item1, x.Item2)).ToImmutableList();
+
+            foreach (var metadataContainer in containers) {
+                metadataContainer.Export = true;
+
+                foreach (var metadataFieldContainer in metadataContainer.Fields)
+                    metadataFieldContainer.Export = true;
+            }
 
             Console.WriteLine(ProcessAndSerialize(containers, AppContext.BaseDirectory)
                 ? "[*] Successfully dumped and serialized!"
