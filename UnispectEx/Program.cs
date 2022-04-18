@@ -20,7 +20,7 @@ namespace UnispectEx {
             if (!processor.Serialize(new DefaultDumpSerializer()))
                 return false;
 
-            return processor.Write(containers, AppContext.BaseDirectory);
+            return processor.Write(AppContext.BaseDirectory);
         }
 
         internal static void Main(string[] args) {

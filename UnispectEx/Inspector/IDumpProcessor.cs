@@ -5,6 +5,6 @@ namespace UnispectEx.Inspector {
         bool Initialize(IEnumerable<MetadataContainer> metadataContainers);
         bool Mark();
         bool Serialize(IDumpSerializer serializer);
-        bool Write(IEnumerable<MetadataContainer> metadataContainers, string outputDirectory);
+        bool Write(string outputDirectory);
     }
 }

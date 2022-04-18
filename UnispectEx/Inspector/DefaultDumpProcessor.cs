@@ -39,7 +39,7 @@ namespace UnispectEx.Inspector {
             return true;
         }
 
-        public bool Write(IEnumerable<MetadataContainer> metadataContainers, string outputDirectory) {
+        public bool Write(string outputDirectory) {
             using var file = File.Open(Path.Join(outputDirectory, "dump.txt"), FileMode.Create);
 
             file.Write(_serializedData.GetBuffer());

@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text;
+
 using dnlib.DotNet;
 
 namespace UnispectEx.Inspector {
@@ -19,7 +20,7 @@ namespace UnispectEx.Inspector {
 
             return builder.ToString();
         }
-        
+
         public bool Serialize(StreamWriter writer, MetadataContainer metadataContainer) {
             writer.WriteLine("---");
             writer.WriteLine($"class: {metadataContainer.MonoClass.FullName}");
