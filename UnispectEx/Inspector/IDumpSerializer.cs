@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using UnispectEx.Inspector;
 
 namespace UnispectEx.Inspector {
     internal interface IDumpSerializer {
