@@ -17,7 +17,7 @@ namespace UnispectEx {
             if (!processor.Mark())
                 return false;
 
-            if (!processor.Serialize(new DefaultSerializer()))
+            if (!processor.Serialize(new DefaultDumpSerializer()))
                 return false;
 
             return processor.Write(containers, AppContext.BaseDirectory);
