@@ -1,25 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+
 using dnlib.DotNet;
+
 using UnispectEx.Mono;
 using UnispectEx.Util;
 
 namespace UnispectEx.Inspector {
-    internal class MetadataFieldContainer {
-        internal MetadataFieldContainer(FieldDef fieldDef, MonoClassField monoClassField) {
-            FieldDef = fieldDef;
-            MonoClassField = monoClassField;
-
-            Export = false;
-        }
-
-        internal FieldDef FieldDef { get; }
-        internal MonoClassField MonoClassField { get; }
-
-        internal bool Export { get; set; }
-    }
-
     internal class MetadataContainer {
         internal MetadataContainer(TypeDef typeDef, MonoClass monoClass) {
             TypeDef = typeDef;
