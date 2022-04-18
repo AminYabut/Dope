@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using dnlib.DotNet;
-using UnispectEx.Inspector;
-using UnispectEx.Mono;
 
 namespace UnispectEx.Inspector {
     internal class DefaultDumpProcessor : IDumpProcessor {

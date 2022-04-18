@@ -2,7 +2,6 @@
 
 using UnispectEx.Mono;
 using UnispectEx.Pe;
-using UnispectEx.Pe.Constants;
 using UnispectEx.Util;
 
 namespace UnispectEx.Inspector {
