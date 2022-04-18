@@ -13,17 +13,17 @@ namespace UnispectEx.Mono {
             lock (_classes)
                 _assemblies[address] = obj;
         }
-        
+
         internal void Cache(ulong address, MonoAssemblyName obj) {
             lock (_classes)
                 _assemblyNames[address] = obj;
         }
-        
+
         internal void Cache(ulong address, MonoImage obj) {
             lock (_images)
                 _images[address] = obj;
         }
-        
+
         internal void Cache(ulong address, MonoClass obj) {
             lock (_classes)
                 _classes[address] = obj;
@@ -40,39 +40,33 @@ namespace UnispectEx.Mono {
         }
 
         internal bool TryGetAssembly(ulong address, out MonoAssembly? monoClass) {
-            lock (_assemblies) {
+            lock (_assemblies)
                 return _assemblies.TryGetValue(address, out monoClass);
-            }
         }
 
         internal bool TryGetAssemblyName(ulong address, out MonoAssemblyName? monoClass) {
-            lock (_assemblyNames) {
+            lock (_assemblyNames)
                 return _assemblyNames.TryGetValue(address, out monoClass);
-            }
         }
 
         internal bool TryGetImage(ulong address, out MonoImage? image) {
-            lock (_images) {
+            lock (_images)
                 return _images.TryGetValue(address, out image);
-            }
         }
 
         internal bool TryGetClass(ulong address, out MonoClass? monoClass) {
-            lock (_classes) {
+            lock (_classes)
                 return _classes.TryGetValue(address, out monoClass);
-            }
         }
 
         internal bool TryGetField(ulong address, out MonoClassField? field) {
-            lock (_fields) {
+            lock (_fields)
                 return _fields.TryGetValue(address, out field);
-            }
         }
 
         internal bool TryGetType(ulong address, out MonoType? type) {
-            lock (_types) {
+            lock (_types)
                 return _types.TryGetValue(address, out type);
-            }
         }
 
         private readonly Dictionary<ulong, MonoAssembly> _assemblies = new();
