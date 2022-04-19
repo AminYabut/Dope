@@ -28,7 +28,7 @@ namespace UnispectEx {
             }
 
             var processName = args[0];
-            var assemblyPath = args[1];
+            var dllName = args[1];
 
             var memory = new LocalMemory();
 
@@ -40,8 +40,13 @@ namespace UnispectEx {
             if (!inspector.Initialize("mono-2.0-bdwgc.dll"))
                 return;
 
-            var assembly = inspector.Domain!.GetAssemblies().FirstOrDefault(x => x.AssemblyName.Name == "Assembly-CSharp")!;
-            var module = ModuleDefMD.Load(assemblyPath);
+            var dataDirectory = inspector.DataDirectory();
+
+            if (dataDirectory is null)
+                return;
+
+            var assembly = inspector.Domain!.GetAssemblies().FirstOrDefault(x => x.AssemblyName.Name == dllName)!;
+            var module = ModuleDefMD.Load(Path.Join(dataDirectory, "Managed", $"{dllName}.dll"));
 
             var correlatedClasses = Helpers.CorrelateClasses(module.GetTypes(), assembly.Image.Types());
             var containers = correlatedClasses.Select(x => new MetadataContainer(x.Item1, x.Item2)).ToImmutableList();
