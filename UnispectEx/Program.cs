@@ -25,7 +25,8 @@ namespace UnispectEx {
 
         internal static void Main(string[] args) {
             if (args.Length != 2) {
-                Console.WriteLine("[*] UnispectEx <process> <Assembly-CSharp.dll path>");
+                Console.WriteLine("*** https://github.com/coconutbird/UnispectEx ***");
+                Console.WriteLine("[*] UnispectEx <process> <dll>");
 
                 return;
             }
