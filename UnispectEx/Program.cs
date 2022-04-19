@@ -49,8 +49,35 @@ namespace UnispectEx {
             if (dataDirectory is null)
                 return;
 
+            var managedDirectory = Path.Join(dataDirectory, "Managed");
+
+            var moduleContext = ModuleDef.CreateModuleContext();
+
+            var assemblyResolver = (AssemblyResolver) moduleContext.AssemblyResolver;
+
+            assemblyResolver.PreSearchPaths.Add(managedDirectory);
+            assemblyResolver.EnableTypeDefCache = true;
+
             var assembly = inspector.Domain!.GetAssemblies().FirstOrDefault(x => x.AssemblyName.Name == dllName)!;
-            var module = ModuleDefMD.Load(Path.Join(dataDirectory, "Managed", $"{dllName}.dll"));
+            var module = ModuleDefMD.Load(Path.Join(managedDirectory, $"{dllName}.dll"));
+
+            module.Context = moduleContext;
+
+            assemblyResolver.AddToCache(module);
+            
+            assemblyResolver.PreSearchPaths.Add(managedDirectory);
+
+            foreach (var reference in module.GetAssemblyRefs()) {
+                try {
+                    var referenceModule = ModuleDefMD.Load(Path.Join(managedDirectory, $"{reference.Name}.dll"), moduleContext);
+
+                    referenceModule.Context = moduleContext;
+
+                    assemblyResolver.AddToCache(referenceModule);
+                } catch (Exception exception) {
+                    Console.WriteLine(exception.Message);
+                }
+            }
 
             var correlatedClasses = Helpers.CorrelateClasses(module.GetTypes(), assembly.Image.Types());
             var containers = correlatedClasses.Select(x => new MetadataContainer(x.Item1, x.Item2)).ToImmutableList();
