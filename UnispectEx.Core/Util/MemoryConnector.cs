@@ -12,6 +12,8 @@ namespace UnispectEx.Core.Util {
         public abstract bool ReadBytes(ulong address, out byte[] buffer, ulong size);
         public abstract bool WriteBytes(ulong address, byte[] buffer);
 
+        public abstract string? ProcessDirectory { get; }
+
         public T Read<T>(ulong address) where T : struct {
             if (!ReadBytes(address, out var buffer, (ulong) Marshal.SizeOf<T>())) {
                 return new T();

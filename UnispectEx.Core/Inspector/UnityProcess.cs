@@ -23,7 +23,20 @@ namespace UnispectEx.Core.Inspector {
             return true;
         }
 
-        public MonoAppDomain? GetRootDomain(string monoDll) {
+        public string? DataDirectory() {
+            var processDirectory = _memory.ProcessDirectory;
+
+            if (processDirectory is null)
+                return null;
+
+            foreach (var directory in Directory.GetDirectories(processDirectory))
+                if (directory.EndsWith("_Data"))
+                    return directory;
+
+            return null;
+        }
+
+        private MonoAppDomain? GetRootDomain(string monoDll) {
             var dll = _memory.GetModule(monoDll);
 
             if (dll == 0)

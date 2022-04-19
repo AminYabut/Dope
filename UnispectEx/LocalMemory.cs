@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -75,6 +76,8 @@ namespace UnispectEx {
             }
         }
 
+        public override string? ProcessDirectory => Path.GetDirectoryName(_process?.MainModule?.FileName) ?? null;
+        
         [Flags]
         private enum ProcessAccessFlags : uint {
             PROCESS_VM_READ = 0x0010,
