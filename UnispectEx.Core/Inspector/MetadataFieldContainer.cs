@@ -11,6 +11,13 @@ namespace UnispectEx.Core.Inspector {
             Export = false;
         }
 
+        public override string ToString() => Name;
+
+        public string Name {
+            get => FieldDef.Name;
+            set => FieldDef.Name = value;
+        }
+
         public FieldDef FieldDef { get; }
         public MonoClassField MonoClassField { get; }
 

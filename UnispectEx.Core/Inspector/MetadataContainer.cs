@@ -18,6 +18,20 @@ namespace UnispectEx.Core.Inspector {
             Fields = fields.ToImmutableList();
         }
 
+        public override string ToString() => FullName;
+
+        public string Name {
+            get => TypeDef.Name;
+            set => TypeDef.Name = value;
+        }
+
+        public string Namespace {
+            get => TypeDef.Namespace;
+            set => TypeDef.Namespace = value;
+        }
+
+        public string FullName => TypeDef.FullName;
+
         public TypeDef TypeDef { get; }
         public MonoClass MonoClass { get; }
 
