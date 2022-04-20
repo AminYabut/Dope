@@ -29,7 +29,7 @@ namespace UnispectEx {
             writer.WriteLine($"parents: {BaseTypes(metadataContainer.TypeDef)}");
 
             foreach (var metadataFieldContainer in metadataContainer.Fields) {
-                if (!metadataContainer.Export)
+                if (!metadataFieldContainer.Export)
                     continue;
 
                 var fieldDef = metadataFieldContainer.FieldDef;
