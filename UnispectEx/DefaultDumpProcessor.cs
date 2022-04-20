@@ -32,7 +32,7 @@ namespace UnispectEx {
         public bool Write(string outputDirectory) {
             using var file = File.Open(Path.Join(outputDirectory, "dump.txt"), FileMode.Create);
 
-            file.Write(_serializedData.GetBuffer());
+            file.Write(_serializedData.ToArray());
 
             return true;
         }
