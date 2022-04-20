@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using dnlib.DotNet;
 
-using EscapeFromTarkov;
 using UnispectEx.Core;
 using UnispectEx.Core.Inspector;
 using UnispectEx.Core.Util;
