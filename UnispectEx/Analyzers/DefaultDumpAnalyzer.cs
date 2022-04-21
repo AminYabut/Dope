@@ -2,7 +2,7 @@
 using System.IO;
 using UnispectEx.Core.Inspector;
 
-namespace UnispectEx {
+namespace UnispectEx.Analyzers{
     public class DefaultDumpAnalyzer : IDumpAnalyzer {
         public bool Analyze(ImmutableList<MetadataContainer> containers) {
             foreach (var container in containers) {

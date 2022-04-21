@@ -3,7 +3,7 @@ using System.IO;
 
 using UnispectEx.Core.Inspector;
 
-namespace UnispectEx {
+namespace UnispectEx.Processors {
     public class DefaultDumpProcessor : IDumpProcessor {
         public bool Initialize(IEnumerable<MetadataContainer> metadataContainers) {
             _metadataContainers = metadataContainers;

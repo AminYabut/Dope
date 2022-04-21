@@ -4,7 +4,12 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+
 using dnlib.DotNet;
+
+using UnispectEx.Analyzers;
+using UnispectEx.Processors;
+using UnispectEx.Serializers;
 
 using UnispectEx.Core;
 using UnispectEx.Core.Inspector;
@@ -84,7 +89,8 @@ namespace UnispectEx {
 
             foreach (var reference in module.GetAssemblyRefs()) {
                 try {
-                    var referenceModule = ModuleDefMD.Load(Path.Join(managedDirectory, $"{reference.Name}.dll"), moduleContext);
+                    var referenceModule = ModuleDefMD.Load(Path.Join(managedDirectory, $"{reference.Name}.dll"),
+                        moduleContext);
 
                     referenceModule.Context = moduleContext;
 
