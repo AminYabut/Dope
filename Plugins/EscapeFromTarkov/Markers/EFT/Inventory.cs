@@ -10,34 +10,19 @@ namespace EscapeFromTarkov.Markers.EFT;
 
 internal class Inventory : IMarker {
     public bool Mark(ImmutableList<MetadataContainer> containers) {
-        var playerContainer = containers.FindContainerByFullName("EFT.Player");
-
-        var inventoryControllerFieldContainer = playerContainer?.FindFieldContainerByName("_inventoryController");
-
-        if (inventoryControllerFieldContainer is null)
-            return false;
-
-        var typeDefOrRef = inventoryControllerFieldContainer.FieldDef.FieldType.ToTypeDefOrRef();
-
-        if (!typeDefOrRef.IsTypeDef)
-            return false;
-        
-        var type = typeDefOrRef.ResolveTypeDef();
-
-        if (type is null)
-            return false;
-
-        var inventoryControllerContainer = containers.FirstOrDefault(x => x.TypeDef == type);
+        var inventoryControllerContainer = containers.FindContainerByFullName("EFT.InventoryController");
 
         if (inventoryControllerContainer is null)
             return false;
+
+        var type = inventoryControllerContainer.TypeDef;
 
         var property = type.FindProperty("Inventory");
 
         if (property is null)
             return false;
 
-        typeDefOrRef = property.GetMethod.ReturnType.ToTypeDefOrRef();
+        var typeDefOrRef = property.GetMethod.ReturnType.ToTypeDefOrRef();
 
         if (!typeDefOrRef.IsTypeDef)
             return false;
