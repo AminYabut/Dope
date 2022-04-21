@@ -2,7 +2,7 @@
 using EscapeFromTarkov.Extensions;
 using UnispectEx.Core.Inspector;
 
-namespace EscapeFromTarkov.Markers.EFT.Ballistics; 
+namespace EscapeFromTarkov.Markers.EFT.Ballistics;
 
 internal class BaseBallistic : IMarker {
     public bool Mark(ImmutableList<MetadataContainer> containers) {
@@ -17,8 +17,10 @@ internal class BaseBallistic : IMarker {
 
         if (surfaceSoundContainer is null)
             return false;
-        
+
         surfaceSoundContainer.ExportNonObfuscatedSymbols();
+
+        baseBallisticContainer.Namespace = "EFT";
 
         return true;
     }
