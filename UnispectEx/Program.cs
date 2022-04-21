@@ -111,7 +111,7 @@ internal static class Program {
             if (plugin is null)
                 return;
 
-            analyzer = plugin.DumpAnalyzers.FirstOrDefault();
+            analyzer = plugin.DumpAnalyzers?.FirstOrDefault();
 
             if (analyzer is null) {
                 Console.WriteLine("[-] invalid plugin name!");
