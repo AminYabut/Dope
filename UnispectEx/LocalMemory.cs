@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 using UnispectEx.Core.Util;
 
-namespace UnispectEx; 
+namespace UnispectEx;
 
 internal class LocalMemory : MemoryConnector {
     public override bool Attach(string name) {
@@ -23,8 +23,7 @@ internal class LocalMemory : MemoryConnector {
 
         try {
             process = Process.GetProcessById(pid);
-        }
-        catch (ArgumentException) {
+        } catch (ArgumentException) {
             return false;
         }
 
@@ -38,7 +37,7 @@ internal class LocalMemory : MemoryConnector {
 
         _process = process;
         _handle = handle;
-            
+
         return true;
     }
 
@@ -78,21 +77,31 @@ internal class LocalMemory : MemoryConnector {
     }
 
     public override string? ProcessDirectory => Path.GetDirectoryName(_process?.MainModule?.FileName) ?? null;
-        
+
     [Flags]
     private enum ProcessAccessFlags : uint {
         PROCESS_VM_READ = 0x0010,
         PROCESS_VM_WRITE = 0x0020
     }
-        
+
     [DllImport("kernel32.dll")]
     private static extern UIntPtr OpenProcess(ProcessAccessFlags desiredAccess, uint inheritHandle, uint pid);
 
     [DllImport("kernel32.dll")]
-    private static extern unsafe bool ReadProcessMemory(UIntPtr handle, nuint address, byte* buffer, nuint size, out nuint bytesRead);
+    private static extern unsafe bool ReadProcessMemory(
+        UIntPtr handle,
+        nuint address,
+        byte* buffer,
+        nuint size,
+        out nuint bytesRead);
 
     [DllImport("kernel32.dll")]
-    private static extern unsafe bool WriteProcessMemory(UIntPtr handle, nuint address, byte* buffer, nuint size, out nuint bytesWritten);
+    private static extern unsafe bool WriteProcessMemory(
+        UIntPtr handle,
+        nuint address,
+        byte* buffer,
+        nuint size,
+        out nuint bytesWritten);
 
     private Process? _process;
     private UIntPtr _handle = UIntPtr.Zero;
