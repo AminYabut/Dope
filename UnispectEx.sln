@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{915E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnispectEx.Core", "UnispectEx.Core\UnispectEx.Core.csproj", "{905BD959-48F2-4EFC-A1A4-047164BD9B9B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EscapeFromTarkov", "Plugins\EscapeFromTarkov\EscapeFromTarkov.csproj", "{35AE8377-5C08-47F2-9C36-50ABB26EA4D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,5 +22,12 @@ Global
 		{905BD959-48F2-4EFC-A1A4-047164BD9B9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{905BD959-48F2-4EFC-A1A4-047164BD9B9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{905BD959-48F2-4EFC-A1A4-047164BD9B9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35AE8377-5C08-47F2-9C36-50ABB26EA4D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35AE8377-5C08-47F2-9C36-50ABB26EA4D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35AE8377-5C08-47F2-9C36-50ABB26EA4D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35AE8377-5C08-47F2-9C36-50ABB26EA4D2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{35AE8377-5C08-47F2-9C36-50ABB26EA4D2} = {915EB8F0-A025-43D2-A009-E2A673024C0D}
 	EndGlobalSection
 EndGlobal
