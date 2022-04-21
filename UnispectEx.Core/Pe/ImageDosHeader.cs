@@ -3,27 +3,27 @@
 using UnispectEx.Core.Pe.Constants;
 using UnispectEx.Core.Util;
 
-namespace UnispectEx.Core.Pe {
-    internal class ImageDosHeader {
-        private ImageDosHeader(ushort magic, uint ntHeadersOffset) {
-            Magic = magic;
-            NtHeadersOffset = ntHeadersOffset;
-        }
+namespace UnispectEx.Core.Pe; 
 
-        internal ushort Magic { get; }
-        internal uint NtHeadersOffset { get; }
+internal class ImageDosHeader {
+    private ImageDosHeader(ushort magic, uint ntHeadersOffset) {
+        Magic = magic;
+        NtHeadersOffset = ntHeadersOffset;
+    }
 
-        internal static ImageDosHeader Create(MemoryConnector memory, ulong address) {
-            var reader = new MemoryReader(memory, address);
+    internal ushort Magic { get; }
+    internal uint NtHeadersOffset { get; }
 
-            var magic = reader.U16();
+    internal static ImageDosHeader Create(MemoryConnector memory, ulong address) {
+        var reader = new MemoryReader(memory, address);
 
-            if (magic != ImageConstants.DosMagic)
-                throw new InvalidOperationException("dos header invalid!");
+        var magic = reader.U16();
 
-            reader.Seek(0x3C);
+        if (magic != ImageConstants.DosMagic)
+            throw new InvalidOperationException("dos header invalid!");
 
-            return new(magic, reader.U32());
-        }
+        reader.Seek(0x3C);
+
+        return new(magic, reader.U32());
     }
 }

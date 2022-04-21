@@ -1,43 +1,43 @@
 ﻿using UnispectEx.Core.Util;
 
-namespace UnispectEx.Core.Pe.DataDirectories {
-    internal class ImageExportDirectory : IDataDirectory {
-        private ImageExportDirectory(
-            uint functionCount,
-            uint namesCount,
-            uint addressOfFunctions,
-            uint addressOfNames,
-            uint addressOfNameOrdinals) {
-            FunctionCount = functionCount;
-            NamesCount = namesCount;
+namespace UnispectEx.Core.Pe.DataDirectories; 
 
-            AddressOfFunctions = addressOfFunctions;
-            AddressOfNames = addressOfNames;
-            AddressOfNameOrdinals = addressOfNameOrdinals;
-        }
+internal class ImageExportDirectory : IDataDirectory {
+    private ImageExportDirectory(
+        uint functionCount,
+        uint namesCount,
+        uint addressOfFunctions,
+        uint addressOfNames,
+        uint addressOfNameOrdinals) {
+        FunctionCount = functionCount;
+        NamesCount = namesCount;
 
-        internal uint FunctionCount { get; }
-        internal uint NamesCount { get; }
+        AddressOfFunctions = addressOfFunctions;
+        AddressOfNames = addressOfNames;
+        AddressOfNameOrdinals = addressOfNameOrdinals;
+    }
 
-        internal uint AddressOfFunctions { get; }
-        internal uint AddressOfNames { get; }
-        internal uint AddressOfNameOrdinals { get; }
+    internal uint FunctionCount { get; }
+    internal uint NamesCount { get; }
 
-        internal static ImageExportDirectory Create(MemoryConnector memory, ulong address) {
-            var reader = new MemoryReader(memory, address);
+    internal uint AddressOfFunctions { get; }
+    internal uint AddressOfNames { get; }
+    internal uint AddressOfNameOrdinals { get; }
 
-            var characteristics = reader.U32();
+    internal static ImageExportDirectory Create(MemoryConnector memory, ulong address) {
+        var reader = new MemoryReader(memory, address);
 
-            reader.Seek(0x14);
+        var characteristics = reader.U32();
 
-            var functionCount = reader.U32();
-            var namesCount = reader.U32();
+        reader.Seek(0x14);
 
-            var addressOfFunctions = reader.U32();
-            var addressOfNames = reader.U32();
-            var addressOfNameOrdinals = reader.U32();
+        var functionCount = reader.U32();
+        var namesCount = reader.U32();
 
-            return new(functionCount, namesCount, addressOfFunctions, addressOfNames, addressOfNameOrdinals);
-        }
+        var addressOfFunctions = reader.U32();
+        var addressOfNames = reader.U32();
+        var addressOfNameOrdinals = reader.U32();
+
+        return new(functionCount, namesCount, addressOfFunctions, addressOfNames, addressOfNameOrdinals);
     }
 }

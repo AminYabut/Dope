@@ -1,3 +1,3 @@
-﻿namespace UnispectEx.Core.Pe.DataDirectories {
-    internal interface IDataDirectory { }
-}
+﻿namespace UnispectEx.Core.Pe.DataDirectories; 
+
+internal interface IDataDirectory { }

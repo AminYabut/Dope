@@ -1,35 +1,35 @@
 ﻿using UnispectEx.Core.Util;
 
-namespace UnispectEx.Core.Pe {
-    internal class ImageFileHeader {
-        private ImageFileHeader(
-            ushort machine,
-            ushort sectionCount,
-            ushort optionalHeaderSize,
-            ushort characteristics) {
-            Machine = machine;
-            SectionCount = sectionCount;
-            OptionalHeaderSize = optionalHeaderSize;
-            Characteristics = characteristics;
-        }
+namespace UnispectEx.Core.Pe; 
 
-        internal ushort Machine { get; }
-        internal ushort SectionCount { get; }
-        internal ushort OptionalHeaderSize { get; }
-        internal ushort Characteristics { get; }
+internal class ImageFileHeader {
+    private ImageFileHeader(
+        ushort machine,
+        ushort sectionCount,
+        ushort optionalHeaderSize,
+        ushort characteristics) {
+        Machine = machine;
+        SectionCount = sectionCount;
+        OptionalHeaderSize = optionalHeaderSize;
+        Characteristics = characteristics;
+    }
 
-        internal static ImageFileHeader Create(MemoryConnector memory, ulong address) {
-            var reader = new MemoryReader(memory, address);
+    internal ushort Machine { get; }
+    internal ushort SectionCount { get; }
+    internal ushort OptionalHeaderSize { get; }
+    internal ushort Characteristics { get; }
 
-            var machine = reader.U16();
-            var sectionCount = reader.U16();
+    internal static ImageFileHeader Create(MemoryConnector memory, ulong address) {
+        var reader = new MemoryReader(memory, address);
 
-            reader.Seek(reader.Tell() + 0xC);
+        var machine = reader.U16();
+        var sectionCount = reader.U16();
 
-            var optionalHeaderSize = reader.U16();
-            var characteristics = reader.U16();
+        reader.Seek(reader.Tell() + 0xC);
 
-            return new(machine, sectionCount, optionalHeaderSize, characteristics);
-        }
+        var optionalHeaderSize = reader.U16();
+        var characteristics = reader.U16();
+
+        return new(machine, sectionCount, optionalHeaderSize, characteristics);
     }
 }

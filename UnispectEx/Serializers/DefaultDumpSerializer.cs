@@ -5,72 +5,72 @@ using dnlib.DotNet;
 
 using UnispectEx.Core.Inspector;
 
-namespace UnispectEx.Serializers {
-    public class DefaultDumpSerializer : IDumpSerializer {
-        private string BaseTypes(TypeDef typeDef) {
-            var builder = new StringBuilder();
+namespace UnispectEx.Serializers; 
 
-            ITypeDefOrRef baseType = typeDef.BaseType;
-            while (baseType is not null) {
-                builder.Append($"{baseType.Name}");
+public class DefaultDumpSerializer : IDumpSerializer {
+    private string BaseTypes(TypeDef typeDef) {
+        var builder = new StringBuilder();
 
-                baseType = baseType.GetBaseType();
+        ITypeDefOrRef baseType = typeDef.BaseType;
+        while (baseType is not null) {
+            builder.Append($"{baseType.Name}");
 
-                if (baseType is not null)
-                    builder.Append(" : ");
-            }
+            baseType = baseType.GetBaseType();
 
-            return builder.ToString();
+            if (baseType is not null)
+                builder.Append(" : ");
         }
 
-        private void WriteClass(StreamWriter writer, MetadataContainer container) {
-            writer.WriteLine($"class: {container.Name}");
-            writer.WriteLine($"parents: {BaseTypes(container.TypeDef)}");
+        return builder.ToString();
+    }
 
-            foreach (var metadataFieldContainer in container.Fields) {
-                if (!metadataFieldContainer.Export)
-                    continue;
+    private void WriteClass(StreamWriter writer, MetadataContainer container) {
+        writer.WriteLine($"class: {container.Name}");
+        writer.WriteLine($"parents: {BaseTypes(container.TypeDef)}");
 
-                var fieldDef = metadataFieldContainer.FieldDef;
-                var offset = metadataFieldContainer.MonoClassField.Offset;
-                var token = fieldDef.MDToken.ToInt32();
+        foreach (var metadataFieldContainer in container.Fields) {
+            if (!metadataFieldContainer.Export)
+                continue;
 
-                string tag;
-                if (fieldDef.IsLiteral)
-                    tag = "[C]";
-                else if (fieldDef.IsStatic)
-                    tag = "[S]";
-                else
-                    tag = "[I]";
+            var fieldDef = metadataFieldContainer.FieldDef;
+            var offset = metadataFieldContainer.MonoClassField.Offset;
+            var token = fieldDef.MDToken.ToInt32();
 
-                writer.WriteLine($"  - {tag} {fieldDef.Name}:0x{token:X} | 0x{offset:X} | {fieldDef.FieldType.FullName}");
-            }
+            string tag;
+            if (fieldDef.IsLiteral)
+                tag = "[C]";
+            else if (fieldDef.IsStatic)
+                tag = "[S]";
+            else
+                tag = "[I]";
+
+            writer.WriteLine($"  - {tag} {fieldDef.Name}:0x{token:X} | 0x{offset:X} | {fieldDef.FieldType.FullName}");
         }
+    }
 
-        private void WriteEnum(StreamWriter writer, MetadataContainer container) {
-            writer.WriteLine($"enum: {container.Name}");
+    private void WriteEnum(StreamWriter writer, MetadataContainer container) {
+        writer.WriteLine($"enum: {container.Name}");
 
-            foreach (var metadataFieldContainer in container.Fields) {
-                if (!metadataFieldContainer.Export)
-                    continue;
+        foreach (var metadataFieldContainer in container.Fields) {
+            if (!metadataFieldContainer.Export)
+                continue;
 
-                var fieldDef = metadataFieldContainer.FieldDef;
+            var fieldDef = metadataFieldContainer.FieldDef;
 
-                writer.WriteLine($"  - [E] {fieldDef.Name} | = {fieldDef.InitialValue}");
-            }
+            writer.WriteLine($"  - [E] {fieldDef.Name} | = {fieldDef.InitialValue}");
         }
+    }
 
-        public bool Serialize(StreamWriter writer, MetadataContainer metadataContainer) {
-            writer.WriteLine("---");
+    public bool Serialize(StreamWriter writer, MetadataContainer metadataContainer) {
+        writer.WriteLine("---");
 
-            if (metadataContainer.TypeDef.IsEnum)
-                WriteEnum(writer, metadataContainer);
-            else if (metadataContainer.TypeDef.IsClass)
-                WriteClass(writer, metadataContainer);
+        if (metadataContainer.TypeDef.IsEnum)
+            WriteEnum(writer, metadataContainer);
+        else if (metadataContainer.TypeDef.IsClass)
+            WriteClass(writer, metadataContainer);
 
-            writer.Flush();
+        writer.Flush();
 
-            return true;
-        }
+        return true;
     }
 }

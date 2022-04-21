@@ -2,17 +2,17 @@
 using System.IO;
 using UnispectEx.Core.Inspector;
 
-namespace UnispectEx.Analyzers{
-    public class DefaultDumpAnalyzer : IDumpAnalyzer {
-        public bool Analyze(ImmutableList<MetadataContainer> containers) {
-            foreach (var container in containers) {
-                container.Export = true;
+namespace UnispectEx.Analyzers; 
 
-                foreach (var fieldContainer in container.Fields)
-                    fieldContainer.Export = true;
-            }
+public class DefaultDumpAnalyzer : IDumpAnalyzer {
+    public bool Analyze(ImmutableList<MetadataContainer> containers) {
+        foreach (var container in containers) {
+            container.Export = true;
 
-            return true;
+            foreach (var fieldContainer in container.Fields)
+                fieldContainer.Export = true;
         }
+
+        return true;
     }
 }

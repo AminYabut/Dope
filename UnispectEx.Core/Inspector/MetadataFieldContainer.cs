@@ -2,25 +2,25 @@
 
 using UnispectEx.Core.Mono;
 
-namespace UnispectEx.Core.Inspector {
-    public class MetadataFieldContainer {
-        internal MetadataFieldContainer(FieldDef fieldDef, MonoClassField monoClassField) {
-            FieldDef = fieldDef;
-            MonoClassField = monoClassField;
+namespace UnispectEx.Core.Inspector; 
 
-            Export = false;
-        }
+public class MetadataFieldContainer {
+    internal MetadataFieldContainer(FieldDef fieldDef, MonoClassField monoClassField) {
+        FieldDef = fieldDef;
+        MonoClassField = monoClassField;
 
-        public override string ToString() => Name;
-
-        public string Name {
-            get => FieldDef.Name;
-            set => FieldDef.Name = value;
-        }
-
-        public FieldDef FieldDef { get; }
-        public MonoClassField MonoClassField { get; }
-
-        public bool Export { get; set; }
+        Export = false;
     }
+
+    public override string ToString() => Name;
+
+    public string Name {
+        get => FieldDef.Name;
+        set => FieldDef.Name = value;
+    }
+
+    public FieldDef FieldDef { get; }
+    public MonoClassField MonoClassField { get; }
+
+    public bool Export { get; set; }
 }
