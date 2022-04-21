@@ -57,7 +57,8 @@ public class DefaultDumpSerializer : IDumpSerializer {
 
             var fieldDef = metadataFieldContainer.FieldDef;
 
-            writer.WriteLine($"  - [E] {fieldDef.Name} | = {fieldDef.InitialValue}");
+            if (fieldDef.HasConstant) 
+                writer.WriteLine($"  - [E] {fieldDef.Name} | = {fieldDef.Constant.Value}");
         }
     }
 
