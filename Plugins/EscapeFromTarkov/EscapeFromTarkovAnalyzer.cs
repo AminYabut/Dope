@@ -22,10 +22,13 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
 
     private readonly IMarker[] _markers = {
         // EFT
-        new EFTHardSettings(),
         new GameWorld(),
-        new Inventory(),
+        new ClientGameWorld(),
+        new ClientLocalGameWorld(),
+
+        new EFTHardSettings(),
         new InventoryController(),
+        new Inventory(),
         new MovementContext(),
         new Player(),
         new PlayerBody(),
