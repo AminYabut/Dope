@@ -5,7 +5,7 @@ using UnispectEx.Core.Inspector;
 
 namespace EscapeFromTarkov.Markers.EFT;
 
-internal class MovementContext : IMarker {
+internal class MovementController : IMarker {
     public bool Mark(ImmutableList<MetadataContainer> containers) {
         var playerContainer = containers.FindContainerByFullName("EFT.Player");
 
@@ -24,7 +24,7 @@ internal class MovementContext : IMarker {
             return false;
 
         type.Namespace = "EFT";
-        type.Name = "MovementContext";
+        type.Name = "MovementController";
 
         movementContextControllerContainer.CleanPropertyFieldNames();
         movementContextControllerContainer.ExportNonObfuscatedSymbols();

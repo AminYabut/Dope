@@ -35,9 +35,12 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new ClientLocalGameWorld(),
 
         new EFTHardSettings(),
+
         new InventoryController(),
         new Inventory(),
-        new MovementContext(),
+        
+        new MovementController(),
+
         new Player(),
         new PlayerBody(),
         
@@ -52,6 +55,10 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
 
         new PrecisionSkill(),
         new BoolSkill(),
+        
+        new InteractionInfo(),
+        new DamageInfo(),
+        new HitInfo(),
 
         // EFT.Ballistics
         new BallisticsCalculator(),
@@ -63,6 +70,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
 
         // EFT.Interactive
         new ExfiltrationController(),
+        new InteractionParameters(),
         
         // EFT.InventoryLogic
         new AmmoTemplate(),
