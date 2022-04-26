@@ -3,7 +3,7 @@ using dnlib.DotNet;
 using EscapeFromTarkov.Extensions;
 using UnispectEx.Core.Inspector;
 
-namespace EscapeFromTarkov.Markers.EFT.Interactive; 
+namespace EscapeFromTarkov.Markers.EFT.Interactive;
 
 public class ExfiltrationController : IMarker {
     public bool Mark(ImmutableList<MetadataContainer> containers) {
@@ -25,7 +25,7 @@ public class ExfiltrationController : IMarker {
 
         if (exfiltrationControllerContainer is null)
             return false;
-        
+
         type.Namespace = "EFT.Interactive";
         type.Name = "ExfiltrationController";
 

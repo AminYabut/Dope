@@ -4,7 +4,7 @@ using EscapeFromTarkov.Extensions;
 
 using UnispectEx.Core.Inspector;
 
-namespace EscapeFromTarkov.Markers.EFT; 
+namespace EscapeFromTarkov.Markers.EFT;
 
 internal class ClientLocalGameWorld : IMarker {
     public bool Mark(ImmutableList<MetadataContainer> containers) {
@@ -14,7 +14,7 @@ internal class ClientLocalGameWorld : IMarker {
             return false;
 
         worldContainer.Namespace = "EFT";
-        
+
         worldContainer.ExportNonObfuscatedSymbols();
 
         return true;

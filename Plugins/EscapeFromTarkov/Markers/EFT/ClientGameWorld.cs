@@ -4,7 +4,7 @@ using EscapeFromTarkov.Extensions;
 
 using UnispectEx.Core.Inspector;
 
-namespace EscapeFromTarkov.Markers.EFT; 
+namespace EscapeFromTarkov.Markers.EFT;
 
 internal class ClientGameWorld : IMarker {
     public bool Mark(ImmutableList<MetadataContainer> containers) {
