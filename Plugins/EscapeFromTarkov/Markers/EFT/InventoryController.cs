@@ -18,23 +18,18 @@ internal class InventoryController : IMarker {
         if (inventoryControllerFieldContainer is null)
             return false;
 
-        var typeDefOrRef = inventoryControllerFieldContainer.FieldDef.FieldType.ToTypeDefOrRef();
+        var inventoryControllerTypeDef = inventoryControllerFieldContainer.FieldDef.FieldType.ToTypeDefOrRef() as TypeDef;
 
-        if (!typeDefOrRef.IsTypeDef)
+        if (inventoryControllerTypeDef is null)
             return false;
 
-        var type = typeDefOrRef.ResolveTypeDef();
-
-        if (type is null)
-            return false;
-
-        var inventoryControllerContainer = containers.FirstOrDefault(x => x.TypeDef == type);
+        var inventoryControllerContainer = inventoryControllerTypeDef.ToMetadataContainer(containers);
 
         if (inventoryControllerContainer is null)
             return false;
 
-        type.Namespace = "EFT";
-        type.Name = "InventoryController";
+        inventoryControllerTypeDef.Namespace = "EFT";
+        inventoryControllerTypeDef.Name = "InventoryController";
 
         inventoryControllerContainer.CleanPropertyFieldNames();
         inventoryControllerContainer.ExportNonObfuscatedSymbols();

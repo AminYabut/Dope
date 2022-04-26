@@ -1,10 +1,12 @@
 ﻿using System.Collections.Immutable;
 
 using EscapeFromTarkov.Markers;
+using EscapeFromTarkov.Markers.Bsg.CameraEffects;
 using EscapeFromTarkov.Markers.Diz.Skinning;
 using EscapeFromTarkov.Markers.EFT;
 using EscapeFromTarkov.Markers.EFT.Ballistics;
 using EscapeFromTarkov.Markers.EFT.Interactive;
+using EscapeFromTarkov.Markers.EFT.InventoryLogic;
 using EscapeFromTarkov.Markers.EFT.Sky;
 using UnispectEx.Core.Inspector;
 
@@ -21,6 +23,12 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
     }
 
     private readonly IMarker[] _markers = {
+        // BSG.CameraEffects
+        new NightVision(),
+        new TextureMask(),
+        new ThermalVision(),
+        new VisorEffect(),
+
         // EFT
         new GameWorld(),
         new ClientGameWorld(),
@@ -33,6 +41,16 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new Player(),
         new PlayerBody(),
 
+        new Profile(),
+        new ProfileInfo(),
+
+        new FirearmController(),
+
+        new SkillManager(),
+
+        new PrecisionSkill(),
+        new BoolSkill(),
+
         // EFT.Ballistics
         new BallisticsCalculator(),
         new BallisticCollider(),
@@ -43,6 +61,11 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
 
         // EFT.Interactive
         new ExfiltrationController(),
+        
+        // EFT.InventoryLogic
+        new AmmoTemplate(),
+        new Item(),
+        new ItemTemplate(),
 
         // EFT.Sky
         new TOD_AtmosphereParameters(),
