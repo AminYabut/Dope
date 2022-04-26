@@ -40,6 +40,8 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new MovementContext(),
         new Player(),
         new PlayerBody(),
+        
+        new PlayerSide(),
 
         new Profile(),
         new ProfileInfo(),
