@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-using UnispectEx.Core.Inspector;
+﻿using UnispectEx.Core.Inspector;
 
 namespace EscapeFromTarkov.Extensions; 
 
 internal static class MetadataContainerExtensions {
     internal static bool IsObfuscated(this MetadataContainer container) {
-        return Helpers.IsObfuscatedSymbolName(container.FullName);
+        return UnispectEx.Core.Util.Helpers.IsObfuscatedSymbolName(container.FullName);
     }
     
     internal static bool IsObfuscated(this MetadataFieldContainer container) {
-        return Helpers.IsObfuscatedSymbolName(container.Name);
+        return UnispectEx.Core.Util.Helpers.IsObfuscatedSymbolName(container.Name);
     }
     
     internal static MetadataContainer? FindContainerByFullName(this IEnumerable<MetadataContainer> containers, string fullName) {
@@ -25,7 +22,7 @@ internal static class MetadataContainerExtensions {
     internal static void ExportNonObfuscatedSymbols(this MetadataContainer container) {
         container.Export = true;
 
-        foreach (var fieldContainer in container.Fields.Where(x => !Helpers.IsObfuscatedSymbolName(x.Name)))
+        foreach (var fieldContainer in container.Fields.Where(x => !UnispectEx.Core.Util.Helpers.IsObfuscatedSymbolName(x.Name)))
             fieldContainer.Export = true;
     }
 

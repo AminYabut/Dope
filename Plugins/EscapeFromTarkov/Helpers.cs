@@ -43,15 +43,11 @@ internal static class Helpers {
         return !typeDefOrRef.IsTypeDef ? null : typeDefOrRef.ResolveTypeDef();
     }
 
-    internal static bool IsObfuscatedSymbolName(string name) {
-        return Regex.IsMatch(name, "[^a-zA-Z0-9_]", RegexOptions.None);
-    }
-
     internal static string? GetFieldNameFromProperty(PropertyDef property, FieldDef field) {
-        if (!IsObfuscatedSymbolName(field.Name))
+        if (!UnispectEx.Core.Util.Helpers.IsObfuscatedSymbolName(field.Name))
             return field.Name;
 
-        if (IsObfuscatedSymbolName(property.Name))
+        if (UnispectEx.Core.Util.Helpers.IsObfuscatedSymbolName(property.Name))
             return null;
 
         var name = new StringBuilder();
