@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using dnlib.DotNet;
 
 using UnispectEx.Core.Mono;
@@ -90,5 +91,9 @@ public static class Helpers {
         }
 
         return builder.ToString();
+    }
+
+    public static bool IsObfuscatedSymbolName(string name) {
+        return Regex.IsMatch(name, "[^a-zA-Z0-9_]", RegexOptions.None);
     }
 }
