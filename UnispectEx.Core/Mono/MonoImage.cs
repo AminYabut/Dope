@@ -16,8 +16,8 @@ public class MonoImage {
     public IEnumerable<MonoClass> Types() {
         var cacheAddress = Address + Offsets.MonoImageClassCache;
 
-        var size = _memory.Read<int>(cacheAddress + Offsets.HashTableSize);
-        var table = _memory.Read<ulong>(cacheAddress + Offsets.HashTableTable);
+        var size = _memory.Read<int>(cacheAddress + Offsets.MonoInternalHashTableSize);
+        var table = _memory.Read<ulong>(cacheAddress + Offsets.MonoInternalHashTableTable);
 
         for (uint i = 0; i < size; i++) {
             for (var it = _memory.Read<ulong>(table + i * 0x8);
