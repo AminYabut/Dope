@@ -20,10 +20,10 @@ public class MonoClass {
 
     public string? FullName => Namespace != string.Empty ? $"{Namespace}.{Name}" : Name;
 
-    internal bool IsInitialized => (_bits & 0x1 << 0) != 0;
-    internal bool IsValueType => (_bits & 0x1 << 3) != 0;
+    internal bool IsInitialized => (Bits & 0x1 << 0) != 0;
+    internal bool IsValueType => (Bits & 0x1 << 3) != 0;
 
-    public ulong Bits => _bits ??= _memory.Read<ulong>(Address + Offsets.MonoClassName);
+    public ulong Bits => _bits ??= _memory.Read<ulong>(Address + Offsets.MonoClassBits);
 
     public string? Name => _name ??= _memory.ReadString(_memory.Read<ulong>(Address + Offsets.MonoClassName), 255);
     public string? Namespace => _namespace ??= _memory.ReadString(_memory.Read<ulong>(Address + Offsets.MonoClassNamespace), 255);
