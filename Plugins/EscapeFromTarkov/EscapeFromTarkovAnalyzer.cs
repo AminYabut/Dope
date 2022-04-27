@@ -5,9 +5,10 @@ using EscapeFromTarkov.Markers.Bsg.CameraEffects;
 using EscapeFromTarkov.Markers.Diz.Skinning;
 using EscapeFromTarkov.Markers.EFT;
 using EscapeFromTarkov.Markers.EFT.Ballistics;
+using EscapeFromTarkov.Markers.EFT.EnvironmentEffect;
 using EscapeFromTarkov.Markers.EFT.Interactive;
 using EscapeFromTarkov.Markers.EFT.InventoryLogic;
-using EscapeFromTarkov.Markers.EFT.Sky;
+using EscapeFromTarkov.Markers.EFT.Tod;
 
 using UnispectEx.Core.Inspector;
 
@@ -29,6 +30,10 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new TextureMask(),
         new ThermalVision(),
         new VisorEffect(),
+        
+        // Diz.Skinning
+        new Skeleton(),
+        new Skin(),
 
         // EFT
         new GameWorld(),
@@ -39,6 +44,8 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
 
         new InventoryController(),
         new Inventory(),
+        
+        new LeanType(),
         
         new MovementController(),
 
@@ -64,6 +71,11 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new BodyRenderer(),
         new DecalTextureType(),
 
+        new AnimatorMask(),
+        new BodyPart(),
+        new UpdateMode(),
+        new UpdateQueue(),
+        
         // EFT.Ballistics
         new BallisticsCalculator(),
         new BallisticCollider(),
@@ -71,6 +83,9 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new MaterialType(),
         new Shot(),
         new TrajectoryInfo(),
+        
+        // EFT.EnvironmentType
+        new EnvironmentType(),
 
         // EFT.Interactive
         new ExfiltrationController(),
@@ -80,14 +95,17 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new AmmoTemplate(),
         new Item(),
         new ItemTemplate(),
+        new MalfunctionState(),
+        new Weapon(),
 
-        // EFT.Sky
+        // TOD
         new TOD_AtmosphereParameters(),
+        new TOD_CloudQualityType(),
+        new TOD_ColorRangeType(),
+        new TOD_ColorSpaceType(),
         new TOD_CycleParameters(),
+        new TOD_MeshQualityType(),
         new TOD_Sky(),
-
-        // Diz.Skinning
-        new Skeleton(),
-        new Skin()
+        new TOD_SkyQualityType()
     };
 }

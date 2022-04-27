@@ -13,6 +13,8 @@ internal class ThermalVision : IMarker {
         if (thermalVisionController is null)
             return false;
 
+        thermalVisionController.Namespace = "BSG.CameraEffects";
+
         thermalVisionController.CleanPropertyFieldNames();
         thermalVisionController.ExportNonObfuscatedSymbols();
 

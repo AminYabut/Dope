@@ -15,6 +15,8 @@ internal class DecalTextureType : IMarker {
         if (decalTextureTypeContainer is null)
             return false;
 
+        decalTextureTypeContainer.Namespace = "EFT";
+
         decalTextureTypeContainer.CleanPropertyFieldNames();
         decalTextureTypeContainer.ExportNonObfuscatedSymbols();
 

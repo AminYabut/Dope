@@ -27,6 +27,7 @@ internal class BoolSkill : IMarker {
         if (skillBuffContainer is null)
             return false;
 
+        skillBuffContainer.Namespace = "EFT";
         skillBuffContainer.Name = "BoolSkill";
 
         skillBuffContainer.CleanPropertyFieldNames();

@@ -12,6 +12,8 @@ internal class VisorEffect : IMarker {
 
         if (visorEffectContainer is null)
             return false;
+        
+        visorEffectContainer.Namespace = "BSG.CameraEffects";
 
         visorEffectContainer.CleanPropertyFieldNames();
         visorEffectContainer.ExportNonObfuscatedSymbols();
