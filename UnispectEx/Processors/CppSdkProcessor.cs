@@ -81,7 +81,7 @@ internal class CppSdkProcessor : IDumpProcessor {
         foreach (var path in otherPaths)
             writer.WriteLine($"#include \"{path}\"");
 
-        writer.WriteLine($"#endif {headerName}");
+        writer.WriteLine($"#endif // {headerName}");
         writer.Flush();
 
         File.WriteAllBytes(Path.Join(rootDirectory, "sdk.hpp"), stream.ToArray());
