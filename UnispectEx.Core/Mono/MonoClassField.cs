@@ -20,7 +20,22 @@ public class MonoClassField {
     public MonoType Type => _type ??= MonoType.Create(_memory, _memory.Read<ulong>(Address + Offsets.MonoClassFieldType), _cache);
     public string Name => _name ??= _memory.ReadString(_memory.Read<ulong>(Address + Offsets.MonoClassFieldName), 255);
     public MonoClass Parent => _parent ??= MonoClass.Create(_memory, _memory.Read<ulong>(Address + Offsets.MonoClassFieldParent), _cache);
-    public int Offset => _offset ??= _memory.Read<int>(Address + Offsets.MonoClassFieldOffset);
+
+    public int Offset {
+        get {
+            var offset = _memory.Read<int>(Address + Offsets.MonoClassFieldOffset);
+
+            if (offset == -1)
+                return offset;
+
+            if (Parent.IsValueType)
+                offset -= 0x10;
+
+            _offset = offset;
+
+            return offset;
+        }
+    }
 
     public int Token {
         get {

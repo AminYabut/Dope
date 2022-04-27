@@ -20,6 +20,7 @@ internal static class Offsets {
     internal const int MonoAssemblyNameArch = 0x48;
 
     // _MonoClass
+    internal const int MonoClassBits = 0x20;
     internal const int MonoClassName = 0x48;
     internal const int MonoClassNamespace = 0x50;
     internal const int MonoClassTypeToken = 0x58;
