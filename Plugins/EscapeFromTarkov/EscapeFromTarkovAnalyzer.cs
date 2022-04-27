@@ -59,6 +59,8 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new InteractionInfo(),
         new DamageInfo(),
         new HitInfo(),
+        
+        new BodyRenderer(),
 
         // EFT.Ballistics
         new BallisticsCalculator(),
