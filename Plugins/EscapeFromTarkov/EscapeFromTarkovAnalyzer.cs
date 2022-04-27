@@ -4,6 +4,7 @@ using EscapeFromTarkov.Markers;
 using EscapeFromTarkov.Markers.Bsg.CameraEffects;
 using EscapeFromTarkov.Markers.Diz.Skinning;
 using EscapeFromTarkov.Markers.EFT;
+using EscapeFromTarkov.Markers.EFT.Animations;
 using EscapeFromTarkov.Markers.EFT.Ballistics;
 using EscapeFromTarkov.Markers.EFT.EnvironmentEffect;
 using EscapeFromTarkov.Markers.EFT.Interactive;
@@ -75,6 +76,9 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new BodyPart(),
         new UpdateMode(),
         new UpdateQueue(),
+        
+        // EFT.Animations
+        new ProceduralWeaponAnimation(),
         
         // EFT.Ballistics
         new BallisticsCalculator(),
