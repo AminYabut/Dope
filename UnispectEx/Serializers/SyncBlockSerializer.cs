@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -24,6 +25,14 @@ public class SyncBlockSerializer : IDumpSerializer {
         }
 
         return builder.ToString();
+    }
+
+    private TypeDef? TypeDefFromSig(TypeSig sig) {
+        return sig.ScopeType switch {
+            TypeDef fieldTypeTypeDef => fieldTypeTypeDef,
+            TypeRef typeRef => sig.Module.Context.Resolver.Resolve(typeRef),
+            _ => null
+        };
     }
 
     private string? ToPrimitiveTypeName(TypeSig fieldSig) {
@@ -83,11 +92,7 @@ public class SyncBlockSerializer : IDumpSerializer {
                 return "int32_t";
         }
 
-        TypeDef? typeDef = fieldSig.ScopeType switch {
-            TypeDef fieldTypeTypeDef => fieldTypeTypeDef,
-            TypeRef typeRef => fieldSig.Module.Context.Resolver.Resolve(typeRef),
-            _ => null
-        };
+        var typeDef = TypeDefFromSig(fieldSig);
 
         if (typeDef is null)
             return null;
@@ -171,11 +176,7 @@ public class SyncBlockSerializer : IDumpSerializer {
                 return 4;
         }
 
-        TypeDef? typeDef = fieldSig.ScopeType switch {
-            TypeDef fieldTypeTypeDef => fieldTypeTypeDef,
-            TypeRef typeRef => fieldSig.Module.Context.Resolver.Resolve(typeRef),
-            _ => null
-        };
+        var typeDef = TypeDefFromSig(fieldSig);
 
         if (typeDef is null)
             return null;
@@ -224,6 +225,22 @@ public class SyncBlockSerializer : IDumpSerializer {
         return null;
     }
 
+    private bool IsIllegalSymbol(string name) {
+        switch (name) {
+            case "auto":
+            case "char":
+            case "short":
+            case "int":
+            case "long":
+            case "float":
+            case "double":
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
     private void WriteClass(StreamWriter writer, MetadataContainer container) {
         uint classSize = 0;
         
@@ -243,11 +260,45 @@ public class SyncBlockSerializer : IDumpSerializer {
         }
 
         var typeName = Helpers.ToSnakeCase(container.Name);
-        
+
         var headerName = $"SDK_{typeName.ToUpper()}_HPP";
 
         writer.WriteLine($"#ifndef {headerName}");
         writer.WriteLine($"#define {headerName}");
+        
+        writer.WriteLine("namespace sdk {");
+        
+        writer.WriteLine("// forwarded");
+
+        var forwardedTypes = new List<string>();
+
+        // forward declare dependencies
+        foreach (var metadataFieldContainer in container.Fields) {
+            if (!metadataFieldContainer.Export)
+                continue;
+
+            var fieldDef = metadataFieldContainer.FieldDef;
+
+            var typeDef = TypeDefFromSig(fieldDef.FieldType);
+
+            if (typeDef is null)
+                continue;
+
+            if (typeDef.Module != fieldDef.Module)
+                continue;
+
+            if (!(typeDef.IsClass && typeDef.IsValueType) && !typeDef.IsEnum)
+                continue;
+
+            var name = Helpers.ToSnakeCase(typeDef.Name);
+
+            if (forwardedTypes.Contains(name))
+                continue;
+            
+            writer.WriteLine(typeDef.IsEnum ? $"enum class {name};" : $"struct {name};");
+
+            forwardedTypes.Add(name);
+        }
 
         writer.WriteLine($"// class: {container.Name}");
         writer.WriteLine($"// parents: {BaseTypes(container.TypeDef)}");
@@ -258,6 +309,7 @@ public class SyncBlockSerializer : IDumpSerializer {
 
         bool insideStaticBlock = false;
 
+        // write field
         foreach (var metadataFieldContainer in container.Fields) {
             if (!metadataFieldContainer.Export)
                 continue;
@@ -280,11 +332,17 @@ public class SyncBlockSerializer : IDumpSerializer {
                 writer.WriteLine("// end static block\n");
 
             var name = new StringBuilder(Helpers.ToSnakeCase(fieldDef.Name));
-
+            
             if (fieldDef.IsStatic)
                 name.Insert(0, name[0] == '_' ? "get" : "get_");
             else
                 name.Insert(0, name[0] == '_' ? "get" : "get_");
+
+            if (IsIllegalSymbol(name.ToString()))
+                name.Append('_');
+
+            if (type is "<ERROR_READING_PRIMITIVE_NAME>" or "<ILLEGAL_STRUCT>" or "<OBFUSCATED_SYMBOL_NAME>")
+                writer.Write("//");
 
             writer.WriteLine($"    SYNC_FIELD({type}, {name}, 0x{offset:X}) // {fieldDef.FieldType.FullName}:0x{fieldDef.MDToken}");
         }
@@ -294,7 +352,9 @@ public class SyncBlockSerializer : IDumpSerializer {
 
         writer.WriteLine($"}};");
 
-        writer.WriteLine($"#endif {headerName}");
+        writer.WriteLine("}");
+
+        writer.WriteLine($"#endif // {headerName}");
     }
 
     private void WriteEnum(StreamWriter writer, MetadataContainer container) {
@@ -311,13 +371,18 @@ public class SyncBlockSerializer : IDumpSerializer {
 
             var fieldDef = metadataFieldContainer.FieldDef;
 
+            var name = new StringBuilder(Helpers.ToSnakeCase(fieldDef.Name));
+            
+            if (IsIllegalSymbol(name.ToString()))
+                name.Append('_');
+
             if (fieldDef.HasConstant) 
-                writer.WriteLine($"    {Helpers.ToSnakeCase(fieldDef.Name)} = {fieldDef.Constant.Value},");
+                writer.WriteLine($"    {name} = {fieldDef.Constant.Value},");
         }
         
         writer.WriteLine("};");
         
-        writer.WriteLine($"#endif {headerName}");
+        writer.WriteLine($"#endif // {headerName}");
     }
 
     public bool Serialize(StreamWriter writer, MetadataContainer metadataContainer) {
