@@ -23,12 +23,17 @@ public class MonoClassField {
 
     public int Offset {
         get {
+            if (_offset.HasValue)
+                return _offset.Value;
+            
             var offset = _memory.Read<int>(Address + Offsets.MonoClassFieldOffset);
 
             if (offset == -1)
                 return offset;
 
-            if (Parent.IsValueType)
+            var type = Type;
+
+            if (Parent.IsValueType && !type.IsStatic && !type.IsLiteral)
                 offset -= 0x10;
 
             _offset = offset;

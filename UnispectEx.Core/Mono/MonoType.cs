@@ -12,6 +12,14 @@ public class MonoType {
 
     internal ulong Address { get; }
 
+    public uint Attributes => _attributes ??= _memory.Read<uint>(Address + Offsets.MonoTypeAttributes);
+    
+    // https://docs.microsoft.com/en-us/dotnet/api/system.reflection.fieldattributes?view=net-6.0
+    public bool IsStatic => (Attributes & 0x10) != 0;
+    public bool IsLiteral => (Attributes & 0x40) != 0;
+
+    public MonoClass AsMonoClass => MonoClass.Create(_memory, Address, _cache);
+
     public MonoClass MonoClass => _class ??= MonoClass.Create(_memory, _memory.Read<ulong>(Address + Offsets.MonoTypeData), _cache);
 
     internal static MonoType Create(MemoryConnector memory, ulong address, MonoObjectCache cache) {
@@ -27,6 +35,7 @@ public class MonoType {
         }
     }
 
+    private uint? _attributes;
     private MonoClass? _class;
     private readonly MemoryConnector _memory;
     private readonly MonoObjectCache _cache;

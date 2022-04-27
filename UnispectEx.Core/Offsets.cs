@@ -43,6 +43,7 @@ internal static class Offsets {
 
     // _MonoType
     internal const int MonoTypeData = 0x0;
+    internal const int MonoTypeAttributes = 0x8;
 
     // _MonoInternalHashTable
     internal const int HashTableNext = 0x10;
