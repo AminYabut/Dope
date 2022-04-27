@@ -37,6 +37,14 @@ public static class Helpers {
             yield return new Tuple<FieldDef, MonoClassField>(e1.Current, e2.Current);
     }
 
+    public static TypeDef? TypeDefFromSig(TypeSig sig) {
+        return sig.ScopeType switch {
+            TypeDef fieldTypeTypeDef => fieldTypeTypeDef,
+            TypeRef typeRef => sig.Module.Context.Resolver.Resolve(typeRef),
+            _ => null
+        };
+    }
+
     // https://stackoverflow.com/a/67332992/17264463
     public static string ToSnakeCase(string text) {
         if (string.IsNullOrEmpty(text))

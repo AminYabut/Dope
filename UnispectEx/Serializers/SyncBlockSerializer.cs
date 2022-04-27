@@ -27,14 +27,6 @@ public class SyncBlockSerializer : IDumpSerializer {
         return builder.ToString();
     }
 
-    private TypeDef? TypeDefFromSig(TypeSig sig) {
-        return sig.ScopeType switch {
-            TypeDef fieldTypeTypeDef => fieldTypeTypeDef,
-            TypeRef typeRef => sig.Module.Context.Resolver.Resolve(typeRef),
-            _ => null
-        };
-    }
-
     private string? ToPrimitiveTypeName(TypeSig fieldSig) {
         if (fieldSig.FullName.EndsWith("[]")) // array
             return "uint64_t";
@@ -92,7 +84,7 @@ public class SyncBlockSerializer : IDumpSerializer {
                 return "int32_t";
         }
 
-        var typeDef = TypeDefFromSig(fieldSig);
+        var typeDef = Helpers.TypeDefFromSig(fieldSig);
 
         if (typeDef is null)
             return null;
@@ -176,7 +168,7 @@ public class SyncBlockSerializer : IDumpSerializer {
                 return 4;
         }
 
-        var typeDef = TypeDefFromSig(fieldSig);
+        var typeDef = Helpers.TypeDefFromSig(fieldSig);
 
         if (typeDef is null)
             return null;
@@ -279,7 +271,7 @@ public class SyncBlockSerializer : IDumpSerializer {
 
             var fieldDef = metadataFieldContainer.FieldDef;
 
-            var typeDef = TypeDefFromSig(fieldDef.FieldType);
+            var typeDef = Helpers.TypeDefFromSig(fieldDef.FieldType);
 
             if (typeDef is null)
                 continue;
