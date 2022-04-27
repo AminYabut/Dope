@@ -8,6 +8,7 @@ using EscapeFromTarkov.Markers.EFT.Ballistics;
 using EscapeFromTarkov.Markers.EFT.Interactive;
 using EscapeFromTarkov.Markers.EFT.InventoryLogic;
 using EscapeFromTarkov.Markers.EFT.Sky;
+
 using UnispectEx.Core.Inspector;
 
 namespace EscapeFromTarkov;
@@ -61,6 +62,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new HitInfo(),
         
         new BodyRenderer(),
+        new DecalTextureType(),
 
         // EFT.Ballistics
         new BallisticsCalculator(),

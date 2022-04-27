@@ -14,15 +14,9 @@ internal class BodyRenderer : IMarker {
 
         var bodyRenderersFieldContainer = playerBodyContainer?.FindFieldContainerByName("_bodyRenderers");
 
-        if (bodyRenderersFieldContainer is null)
-            return false;
+        var bodyRendererTypeDef = bodyRenderersFieldContainer?.FieldDef.FieldType.ScopeType as TypeDef;
 
-        var bodyRendererTypeDef = bodyRenderersFieldContainer.FieldDef.FieldType.ScopeType as TypeDef;
-
-        if (bodyRendererTypeDef is null)
-            return false;
-        
-        var bodyRendererContainer = bodyRendererTypeDef.ToMetadataContainer(containers);
+        var bodyRendererContainer = bodyRendererTypeDef?.ToMetadataContainer(containers);
 
         if (bodyRendererContainer is null)
             return false;

@@ -33,7 +33,7 @@ internal class Inventory : IMarker {
 
         if (inventoryContainer is null)
             return false;
-        
+
         type.Namespace = "EFT";
         type.Name = "Inventory";
 
