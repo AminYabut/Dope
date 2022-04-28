@@ -21,7 +21,7 @@ public class MonoClass {
     public string? FullName => Namespace != string.Empty ? $"{Namespace}.{Name}" : Name;
 
     internal bool IsInitialized => (Bits & 0x1 << 0) != 0;
-    internal bool IsValueType => (Bits & 0x1 << 3) != 0;
+    internal bool IsValueType => (Bits & 0x1 << 2) != 0;
 
     public ulong Bits => _bits ??= _memory.Read<ulong>(Address + Offsets.MonoClassBits);
 
