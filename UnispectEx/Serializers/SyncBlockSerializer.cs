@@ -292,12 +292,16 @@ public class SyncBlockSerializer : IDumpSerializer {
             forwardedTypes.Add(name);
         }
 
-        writer.WriteLine($"// class: {container.Name}");
+        bool isStruct = container.TypeDef.IsValueType;
+        
+        writer.WriteLine($"// {(isStruct ? "struct" : "class")}: {container.Name}");
         writer.WriteLine($"// parents: {BaseTypes(container.TypeDef)}");
 
-        writer.WriteLine($"struct {typeName} : sync_block<0x{classSize:X}> {{");
+        writer.WriteLine($"struct {typeName} : {(isStruct ? "memory_block" : "sync_block")}<0x{classSize:X}> {{");
         writer.WriteLine($"    {typeName}() = default;");
-        writer.WriteLine($"    explicit {typeName}(uint64_t address) : sync_block(address) {{ }}");
+        
+        if (!isStruct)
+            writer.WriteLine($"    explicit {typeName}(uint64_t address) : sync_block(address) {{ }}");
 
         bool insideStaticBlock = false;
 
@@ -336,7 +340,7 @@ public class SyncBlockSerializer : IDumpSerializer {
             if (type is "<ERROR_READING_PRIMITIVE_NAME>" or "<ILLEGAL_STRUCT>" or "<OBFUSCATED_SYMBOL_NAME>")
                 writer.Write("//");
 
-            writer.WriteLine($"    SYNC_FIELD({type}, {name}, 0x{offset:X}) // {fieldDef.FieldType.FullName}:0x{fieldDef.MDToken}");
+            writer.WriteLine($"    {(isStruct ? "FIELD" : "SYNC_FIELD")}({type}, {name}, 0x{offset:X}) // {fieldDef.FieldType.FullName}:0x{fieldDef.MDToken}");
         }
         
         if (insideStaticBlock)
