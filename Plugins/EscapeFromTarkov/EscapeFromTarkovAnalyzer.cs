@@ -10,6 +10,7 @@ using EscapeFromTarkov.Markers.EFT.EnvironmentEffect;
 using EscapeFromTarkov.Markers.EFT.Interactive;
 using EscapeFromTarkov.Markers.EFT.InventoryLogic;
 using EscapeFromTarkov.Markers.EFT.Tod;
+using EscapeFromTarkov.Markers.EFT.Visual;
 
 using UnispectEx.Core.Inspector;
 
@@ -31,7 +32,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new TextureMask(),
         new ThermalVision(),
         new VisorEffect(),
-        
+
         // Diz.Skinning
         new Skeleton(),
         new Skin(),
@@ -45,18 +46,24 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
 
         new InventoryController(),
         new Inventory(),
-        
+
         new LeanType(),
-        
+
         new MovementController(),
 
         new Player(),
         new PlayerBody(),
         
+        new PhysicalController(),
+        new RegenerativeController(),
+
         new PlayerSide(),
 
         new Profile(),
         new ProfileInfo(),
+        new ProfileSettings(),
+
+        new WildSpawnType(),
 
         new FirearmController(),
 
@@ -64,11 +71,11 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
 
         new PrecisionSkill(),
         new BoolSkill(),
-        
+
         new InteractionInfo(),
         new DamageInfo(),
         new HitInfo(),
-        
+
         new BodyRenderer(),
         new DecalTextureType(),
 
@@ -76,10 +83,12 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new BodyPart(),
         new UpdateMode(),
         new UpdateQueue(),
-        
+
         // EFT.Animations
+        new BreathEffector(),
         new ProceduralWeaponAnimation(),
-        
+        new ProceduralWeaponAnimationMask(),
+
         // EFT.Ballistics
         new BallisticsCalculator(),
         new BallisticCollider(),
@@ -87,16 +96,17 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new MaterialType(),
         new Shot(),
         new TrajectoryInfo(),
-        
+
         // EFT.EnvironmentType
         new EnvironmentType(),
 
         // EFT.Interactive
         new ExfiltrationController(),
         new InteractionParameters(),
-        
+
         // EFT.InventoryLogic
         new AmmoTemplate(),
+        new Equipment(),
         new Item(),
         new ItemTemplate(),
         new MalfunctionState(),
@@ -110,6 +120,9 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new TOD_CycleParameters(),
         new TOD_MeshQualityType(),
         new TOD_Sky(),
-        new TOD_SkyQualityType()
+        new TOD_SkyQualityType(),
+
+        // Visual
+        new LoddedSkin()
     };
 }

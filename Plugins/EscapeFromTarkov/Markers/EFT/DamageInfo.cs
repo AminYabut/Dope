@@ -17,7 +17,7 @@ internal class DamageInfo : IMarker {
         if (inventoryControllerFieldContainer is null)
             return false;
 
-        var inventoryControllerTypeDef = inventoryControllerFieldContainer.FieldDef.FieldType.ToTypeDefOrRef() as TypeDef;
+        var inventoryControllerTypeDef = Helpers.GetFieldDefTypeTypeDef(inventoryControllerFieldContainer.FieldDef);
 
         if (inventoryControllerTypeDef is null)
             return false;

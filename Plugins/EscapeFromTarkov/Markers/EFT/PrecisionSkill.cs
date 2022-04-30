@@ -19,8 +19,8 @@ internal class PrecisionSkill : IMarker {
 
         if (aimMasterSpeedContainer is null)
             return false;
-        
-        var profileInfoTypeDef = aimMasterSpeedContainer.FieldDef.FieldType.ToTypeDefOrRef() as TypeDef;
+
+        var profileInfoTypeDef = Helpers.GetFieldDefTypeTypeDef(aimMasterSpeedContainer.FieldDef);
 
         if (profileInfoTypeDef is null)
             return false;
