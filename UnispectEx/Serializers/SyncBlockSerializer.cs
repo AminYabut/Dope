@@ -347,7 +347,7 @@ public class SyncBlockSerializer : IDumpSerializer {
         if (insideStaticBlock)
             writer.WriteLine("// end static block\n");
 
-        writer.WriteLine($"}};");
+        writer.WriteLine("};");
 
         writer.WriteLine("}");
 
@@ -360,8 +360,13 @@ public class SyncBlockSerializer : IDumpSerializer {
         writer.WriteLine($"#ifndef {headerName}");
         writer.WriteLine($"#define {headerName}");
         
+        writer.WriteLine("namespace sdk {");
+
+        writer.WriteLine($"// enum: {container.Name}");
+        writer.WriteLine($"// parents: {BaseTypes(container.TypeDef)}");
+
         writer.WriteLine($"enum class {Helpers.ToSnakeCase(container.Name)} {{");
-        
+
         foreach (var metadataFieldContainer in container.Fields) {
             if (!metadataFieldContainer.Export)
                 continue;
@@ -378,6 +383,8 @@ public class SyncBlockSerializer : IDumpSerializer {
         }
         
         writer.WriteLine("};");
+        
+        writer.WriteLine("}");
         
         writer.WriteLine($"#endif // {headerName}");
     }
