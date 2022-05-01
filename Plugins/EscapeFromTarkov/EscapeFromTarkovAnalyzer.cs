@@ -104,6 +104,9 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
 
         // EFT.Interactive
         new ExfiltrationController(),
+        new ExfiltrationPoint(),
+        new ExfiltrationStatus(),
+        new ExitTriggerSettings(),
         new InteractionParameters(),
 
         // EFT.InventoryLogic
