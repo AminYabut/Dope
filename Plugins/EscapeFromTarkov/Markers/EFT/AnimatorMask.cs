@@ -13,6 +13,8 @@ internal class AnimatorMask : IMarker {
         if (animatorMaskContainer is null)
             return false;
 
+        animatorMaskContainer.Namespace = "EFT";
+
         animatorMaskContainer.CleanPropertyFieldNames();
         animatorMaskContainer.ExportNonObfuscatedSymbols();
 

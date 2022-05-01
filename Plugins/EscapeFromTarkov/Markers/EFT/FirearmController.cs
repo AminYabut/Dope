@@ -13,6 +13,8 @@ internal class FirearmController: IMarker {
         if (firearmControllerContainer is null)
             return false;
 
+        firearmControllerContainer.Namespace = "EFT";
+
         firearmControllerContainer.CleanPropertyFieldNames();
         firearmControllerContainer.ExportNonObfuscatedSymbols();
 

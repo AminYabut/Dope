@@ -27,6 +27,7 @@ internal class InteractionParameters : IMarker {
         if (interactionParametersContainer is null)
             return false;
 
+        interactionParametersTypeDef.Namespace = "EFT.Interactive";
         interactionParametersTypeDef.Name = "InteractionParameters";
 
         interactionParametersContainer.CleanPropertyFieldNames();

@@ -13,6 +13,8 @@ internal class MalfunctionState : IMarker {
         if (malfunctionStateContainer is null)
             return false;
 
+        malfunctionStateContainer.Namespace = "EFT.InventoryLogic";
+
         malfunctionStateContainer.CleanPropertyFieldNames();
         malfunctionStateContainer.ExportNonObfuscatedSymbols();
 

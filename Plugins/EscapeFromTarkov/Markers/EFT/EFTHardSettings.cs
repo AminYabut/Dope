@@ -12,6 +12,8 @@ internal class EFTHardSettings : IMarker {
 
         if (eftHardSettingsContainer is null)
             return false;
+        
+        eftHardSettingsContainer.Namespace = "EFT";
 
         eftHardSettingsContainer.CleanPropertyFieldNames();
         eftHardSettingsContainer.ExportNonObfuscatedSymbols();

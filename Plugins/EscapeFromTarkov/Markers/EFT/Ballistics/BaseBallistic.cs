@@ -18,6 +18,8 @@ internal class BaseBallistic : IMarker {
         if (surfaceSoundContainer is null)
             return false;
 
+        surfaceSoundContainer.Namespace = "EFT.Ballistics";
+        
         surfaceSoundContainer.ExportNonObfuscatedSymbols();
 
         baseBallisticContainer.Namespace = "EFT";

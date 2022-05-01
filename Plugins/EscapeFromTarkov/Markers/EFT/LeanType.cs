@@ -13,6 +13,8 @@ internal class LeanType : IMarker {
         if (leanTypeContainer is null)
             return false;
 
+        leanTypeContainer.Namespace = "EFT";
+
         leanTypeContainer.CleanPropertyFieldNames();
         leanTypeContainer.ExportNonObfuscatedSymbols();
 

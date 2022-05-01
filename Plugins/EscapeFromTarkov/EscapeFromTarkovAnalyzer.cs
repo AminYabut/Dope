@@ -49,7 +49,9 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
 
         new LeanType(),
 
+        new MemberCategory(),
         new MovementController(),
+        new MotionEffector(),
 
         new Player(),
         new PlayerBody(),

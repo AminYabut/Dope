@@ -13,6 +13,8 @@ internal class UpdateMode : IMarker {
         if (updateModeContainer is null)
             return false;
 
+        updateModeContainer.Namespace = "EFT";
+
         updateModeContainer.CleanPropertyFieldNames();
         updateModeContainer.ExportNonObfuscatedSymbols();
 

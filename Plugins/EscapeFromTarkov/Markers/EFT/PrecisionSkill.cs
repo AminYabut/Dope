@@ -30,6 +30,7 @@ internal class PrecisionSkill : IMarker {
         if (skillBuffContainer is null)
             return false;
 
+        skillBuffContainer.Namespace = "EFT";
         skillBuffContainer.Name = "PrecisionSkill";
 
         skillBuffContainer.CleanPropertyFieldNames();
