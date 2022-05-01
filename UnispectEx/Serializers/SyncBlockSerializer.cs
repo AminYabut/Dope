@@ -287,12 +287,16 @@ public class SyncBlockSerializer : IDumpSerializer {
             if (!(typeDef.IsClass && typeDef.IsValueType) && !typeDef.IsEnum)
                 continue;
 
-            var name = Helpers.ToSnakeCase(typeDef.Name);
+            bool isObfuscated = Helpers.IsObfuscatedSymbolName(typeDef.Name);
+            var name = isObfuscated ? "<OBFUSCATED_SYMBOL_NAME>" : Helpers.ToSnakeCase(typeDef.Name);
 
             if (forwardedTypes.Contains(name))
                 continue;
-            
-            writer.WriteLine(typeDef.IsEnum ? $"enum class {name};" : $"struct {name};");
+
+            if (isObfuscated)
+                writer.WriteLine(typeDef.IsEnum ? $"// enum class {name};" : $"// struct {name};");
+            else
+                writer.WriteLine(typeDef.IsEnum ? $"enum class {name};" : $"struct {name};");
 
             forwardedTypes.Add(name);
         }
