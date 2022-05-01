@@ -237,18 +237,21 @@ public class SyncBlockSerializer : IDumpSerializer {
     private void WriteClass(StreamWriter writer, MetadataContainer container) {
         uint classSize = 0;
         
-        var lastField = container.Fields.LastOrDefault(x => x.MonoClassField.Offset != -1 && !x.FieldDef.IsStatic && !x.FieldDef.IsLiteral && x.Export);
-        if (lastField is not null) {
-            uint size = lastField.FieldDef.GetFieldSize();
+        if (container.Fields.Count > 0) {
+            var highestOffsetField = container.Fields
+                .Where(x => !x.FieldDef.IsLiteral && !x.FieldDef.IsStatic)
+                .Aggregate((l, r) => l.MonoClassField.Offset > r.MonoClassField.Offset ? l : r);
+            
+            uint size = highestOffsetField.FieldDef.GetFieldSize();
             if (size != 0)
-                classSize = (uint) lastField.MonoClassField.Offset + size;
+                classSize = (uint) highestOffsetField.MonoClassField.Offset + size;
             else {
-                var typeSize = ToPrimitiveTypeSize(lastField.FieldDef.FieldType);
+                var typeSize = ToPrimitiveTypeSize(highestOffsetField.FieldDef.FieldType);
 
                 if (typeSize is null)
-                    classSize = (uint) lastField.MonoClassField.Offset + 0x8; // TODO: GUESS SIZE
+                    classSize = (uint) highestOffsetField.MonoClassField.Offset + 0x8; // TODO: GUESS SIZE
                 else
-                    classSize = (uint) lastField.MonoClassField.Offset + typeSize.Value;
+                    classSize = (uint) highestOffsetField.MonoClassField.Offset + typeSize.Value;
             }
         }
 
