@@ -255,9 +255,10 @@ public class SyncBlockSerializer : IDumpSerializer {
             }
         }
 
+        var namespaceName = Helpers.ToSnakeCase(container.Namespace);
         var typeName = Helpers.ToSnakeCase(container.Name);
 
-        var headerName = $"SDK_{typeName.ToUpper()}_HPP";
+        var headerName = $"SDK_{namespaceName.ToUpper()}_{typeName.ToUpper()}_HPP";
 
         writer.WriteLine($"#ifndef {headerName}");
         writer.WriteLine($"#define {headerName}");
