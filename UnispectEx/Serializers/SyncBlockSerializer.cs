@@ -220,6 +220,7 @@ public class SyncBlockSerializer : IDumpSerializer {
     private bool IsIllegalSymbol(string name) {
         switch (name) {
             case "auto":
+            case "default":
             case "char":
             case "short":
             case "int":
