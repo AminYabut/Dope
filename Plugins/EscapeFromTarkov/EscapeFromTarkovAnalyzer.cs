@@ -9,6 +9,7 @@ using EscapeFromTarkov.Markers.EFT.Ballistics;
 using EscapeFromTarkov.Markers.EFT.EnvironmentEffect;
 using EscapeFromTarkov.Markers.EFT.Interactive;
 using EscapeFromTarkov.Markers.EFT.InventoryLogic;
+using EscapeFromTarkov.Markers.EFT.Network;
 using EscapeFromTarkov.Markers.EFT.Tod;
 using EscapeFromTarkov.Markers.EFT.Visual;
 
@@ -85,6 +86,9 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new BodyPart(),
         new UpdateMode(),
         new UpdateQueue(),
+        
+        new ClientApplication(),
+        new MainApplication(),
 
         // EFT.Animations
         new BreathEffector(),
@@ -116,6 +120,10 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new ItemTemplate(),
         new MalfunctionState(),
         new Weapon(),
+        
+        // EFT.Network
+        new Backend(),
+        new Session(),
 
         // TOD
         new TOD_AtmosphereParameters(),

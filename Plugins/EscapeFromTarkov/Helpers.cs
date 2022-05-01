@@ -28,7 +28,16 @@ internal static class Helpers {
             if (fieldDef is null)
                 return null;
 
-            if (fieldDef.FieldType.AssemblyQualifiedName != method.ReturnType.AssemblyQualifiedName)
+            if (fieldDef.FieldType.AssemblyQualifiedName == method.ReturnType.AssemblyQualifiedName)
+                return fieldDef;
+
+            var fieldTypeDef = fieldDef.FieldType.ScopeType as TypeDef;
+            var returnTypeDef = method.ReturnType.ScopeType as TypeDef;
+
+            if (fieldTypeDef is null || returnTypeDef is null)
+                return null;
+
+            if (!TypeImplementsInterface(fieldTypeDef, returnTypeDef))
                 continue;
 
             return fieldDef;
@@ -62,5 +71,18 @@ internal static class Helpers {
         }
 
         return name.ToString();
+    }
+
+    internal static bool TypeImplementsInterface(TypeDef typeDef, TypeDef interfaceTypeDef) {
+        foreach (var interfaceImpl in typeDef.Interfaces) {
+            var interfaceType = interfaceImpl.Interface as TypeDef;
+            if (interfaceType is null)
+                continue;
+
+            if (interfaceType == interfaceTypeDef)
+                return true;
+        }
+
+        return false;
     }
 }
