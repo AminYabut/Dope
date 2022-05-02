@@ -53,6 +53,8 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new MemberCategory(),
         new MovementController(),
         new MotionEffector(),
+        
+        new BifacialTransform(),
 
         new Player(),
         new PlayerBody(),
@@ -90,6 +92,8 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new ClientApplication(),
         new MainApplication(),
 
+        new HideoutController(),
+
         // EFT.Animations
         new BreathEffector(),
         new ProceduralWeaponAnimation(),
@@ -115,10 +119,13 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
 
         // EFT.InventoryLogic
         new AmmoTemplate(),
-        new Equipment(),
+        new EquipmentContainer(),
+        new EquipmentSlot(),
+        new ItemContainer(),
         new Item(),
         new ItemTemplate(),
         new MalfunctionState(),
+        new Slot(),
         new Weapon(),
         
         // EFT.Network

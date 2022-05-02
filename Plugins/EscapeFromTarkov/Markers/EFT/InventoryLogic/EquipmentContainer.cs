@@ -6,7 +6,7 @@ using UnispectEx.Core.Inspector;
 
 namespace EscapeFromTarkov.Markers.EFT.InventoryLogic; 
 
-internal class Equipment : IMarker {
+internal class EquipmentContainer : IMarker {
     public bool Mark(ImmutableList<MetadataContainer> containers) {
         var inventoryContainer = containers.FindContainerByFullName("EFT.Inventory");
 
@@ -20,13 +20,21 @@ internal class Equipment : IMarker {
         if (equipmentTypeDef is null)
             return false;
 
+        var slotsFieldDef = equipmentTypeDef.Fields.FirstOrDefault(x =>
+            x.FieldType.ScopeType.FullName == "EFT.InventoryLogic.Slot");
+
+        if (slotsFieldDef is null)
+            return false;
+        
         var equipmentContainer = equipmentTypeDef.ToMetadataContainer(containers);
 
         if (equipmentContainer is null)
             return false;
 
+        slotsFieldDef.Name = "_slots";
+
         equipmentContainer.Namespace = "EFT.InventoryLogic";
-        equipmentContainer.Name = "Equipment";
+        equipmentContainer.Name = "EquipmentContainer";
         
         equipmentContainer.CleanPropertyFieldNames();
         equipmentContainer.ExportNonObfuscatedSymbols();
