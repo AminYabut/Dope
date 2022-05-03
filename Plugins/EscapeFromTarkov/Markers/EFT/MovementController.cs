@@ -48,7 +48,7 @@ internal class MovementController : IMarker {
             return null;
 
         var instructions = method.Body.Instructions;
-        for (var i = 0; i < instructions.Count - 3; ++i) {
+        for (var i = 0; i < instructions.Count - 4; ++i) {
             if (instructions[i].OpCode != OpCodes.Ldflda ||
                 instructions[i + 1].OpCode != OpCodes.Ldarg_0 ||
                 instructions[i + 2].OpCode != OpCodes.Ldflda ||
