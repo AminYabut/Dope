@@ -128,6 +128,9 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new MalfunctionState(),
         new Slot(),
         new Weapon(),
+        new ItemOwner(),
+        new LootItem(),
+        new StackSlot(),
         
         // EFT.Network
         new Backend(),
