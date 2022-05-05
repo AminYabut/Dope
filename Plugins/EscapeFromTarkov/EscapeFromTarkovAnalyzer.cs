@@ -122,7 +122,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new AmmoTemplate(),
         new EquipmentContainer(),
         new EquipmentSlot(),
-        new LootItem(),
+        new ItemContainer(),
         new Item(),
         new ItemTemplate(),
         new MalfunctionState(),
