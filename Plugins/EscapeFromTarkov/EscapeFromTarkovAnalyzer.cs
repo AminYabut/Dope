@@ -86,6 +86,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
 
         new AnimatorMask(),
         new BodyPart(),
+        new Throwable(),
         new UpdateMode(),
         new UpdateQueue(),
         
