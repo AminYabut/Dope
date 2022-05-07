@@ -4,11 +4,11 @@ using EscapeFromTarkov.Extensions;
 
 using UnispectEx.Core.Inspector;
 
-namespace EscapeFromTarkov.Markers.EFT.InventoryLogic; 
+namespace EscapeFromTarkov.Markers.EFT.Interactive; 
 
 internal class LootItem : IMarker {
     public bool Mark(ImmutableList<MetadataContainer> containers) {
-        var lootItemContainer = containers.FindContainerByFullName("EFT.InventoryLogic.LootItem");
+        var lootItemContainer = containers.FindContainerByFullName("EFT.Interactive.LootItem");
 
         if (lootItemContainer is null)
             return false;
