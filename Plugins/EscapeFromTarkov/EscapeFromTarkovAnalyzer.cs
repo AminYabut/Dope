@@ -117,6 +117,11 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new ExfiltrationStatus(),
         new ExitTriggerSettings(),
         new InteractionParameters(),
+        new LootItem(),
+        new Corpse(),
+        new WorldInteractiveObject(),
+        new Door(),
+        new LootableContainer(),
 
         // EFT.InventoryLogic
         new AmmoTemplate(),
@@ -128,8 +133,8 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new MalfunctionState(),
         new Slot(),
         new Weapon(),
-        new ItemOwner(),
-        new LootItem(),
+        new WeaponTemplate(),
+        new ItemController(),
         new StackSlot(),
         
         // EFT.Network
