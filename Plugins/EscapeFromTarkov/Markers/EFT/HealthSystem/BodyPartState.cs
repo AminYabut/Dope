@@ -10,7 +10,9 @@ internal class BodyPartState : IMarker {
 
         if (bodyPartStateContainer is null)
             return false;
-
+        
+        bodyPartStateContainer.Namespace = "EFT.HealthSystem";
+        
         bodyPartStateContainer.CleanPropertyFieldNames();
         bodyPartStateContainer.ExportNonObfuscatedSymbols();
 
