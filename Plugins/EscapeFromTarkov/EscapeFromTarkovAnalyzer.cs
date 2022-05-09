@@ -7,6 +7,7 @@ using EscapeFromTarkov.Markers.EFT;
 using EscapeFromTarkov.Markers.EFT.Animations;
 using EscapeFromTarkov.Markers.EFT.Ballistics;
 using EscapeFromTarkov.Markers.EFT.EnvironmentEffect;
+using EscapeFromTarkov.Markers.EFT.HealthSystem;
 using EscapeFromTarkov.Markers.EFT.Interactive;
 using EscapeFromTarkov.Markers.EFT.InventoryLogic;
 using EscapeFromTarkov.Markers.EFT.Network;
@@ -61,7 +62,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         
         new PhysicalController(),
         new RegenerativeController(),
-
+        
         new PlayerSide(),
 
         new Profile(),
@@ -108,8 +109,14 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new Shot(),
         new TrajectoryInfo(),
 
-        // EFT.EnvironmentType
+        // EFT.EnvironmentEffect
         new EnvironmentType(),
+        
+        // EFT.HealthSystem
+        new HealthController(),
+        new BodyPartState(),
+        new HealthValue(),
+        new ValueStruct(),
 
         // EFT.Interactive
         new ExfiltrationController(),
