@@ -1,5 +1,5 @@
 ﻿using System.Collections.Immutable;
-
+using dnlib.DotNet;
 using EscapeFromTarkov.Extensions;
 
 using UnispectEx.Core.Inspector;
@@ -13,6 +13,28 @@ internal class PlayerBody : IMarker {
         if (playerBodyContainer is null)
             return false;
 
+        var getSlotViewMethodDef = playerBodyContainer.TypeDef.FindMethod("GetSlotViewByItem");
+
+        if (getSlotViewMethodDef is null)
+            return false;
+
+        var slotViewDef = getSlotViewMethodDef.ReturnType.TryGetTypeDef();
+
+        if (slotViewDef is null)
+            return false;
+        
+
+        var slotViewContainer = slotViewDef.ToMetadataContainer(containers);
+
+        if (slotViewContainer is null)
+            return false;
+        
+        slotViewContainer.Namespace = "EFT";
+        slotViewContainer.Name = "SlotView";
+        
+        slotViewContainer.CleanPropertyFieldNames();
+        slotViewContainer.ExportNonObfuscatedSymbols();
+        
         playerBodyContainer.CleanPropertyFieldNames();
         playerBodyContainer.ExportNonObfuscatedSymbols();
 
