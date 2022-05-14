@@ -34,6 +34,8 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new TextureMask(),
         new ThermalVision(),
         new VisorEffect(),
+        new ThermalVisionUtilities(),
+        new ValuesCoefs(),
 
         // Diz.Skinning
         new Skeleton(),
@@ -95,6 +97,8 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new MainApplication(),
 
         new HideoutController(),
+        
+        new TurnAwayEffector(),
 
         // EFT.Animations
         new BreathEffector(),
