@@ -34,6 +34,8 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new TextureMask(),
         new ThermalVision(),
         new VisorEffect(),
+        new ThermalVisionUtilities(),
+        new ValuesCoefs(),
 
         // Diz.Skinning
         new Skeleton(),
@@ -95,6 +97,8 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new MainApplication(),
 
         new HideoutController(),
+        
+        new TurnAwayEffector(),
 
         // EFT.Animations
         new BreathEffector(),
@@ -121,6 +125,8 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         // EFT.Interactive
         new ExfiltrationController(),
         new ExfiltrationPoint(),
+        new ScavExfiltrationPoint(),
+        new ExfiltrationType(),
         new ExfiltrationStatus(),
         new ExitTriggerSettings(),
         new InteractionParameters(),
@@ -159,6 +165,10 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new TOD_SkyQualityType(),
 
         // Visual
-        new LoddedSkin()
+        new LoddedSkin(),
+        new CustomSkin(),
+        new Dress(),
+        new SkinDress(),
+        new TorsoSkin()
     };
 }

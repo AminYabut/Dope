@@ -15,6 +15,10 @@ internal static class MetadataContainerExtensions {
         return containers.FirstOrDefault(x => x.FullName == fullName);
     }
     
+    internal static MetadataContainer? FindContainerContainingFullName(this IEnumerable<MetadataContainer> containers, string fullName) {
+        return containers.FirstOrDefault(x => x.FullName.Contains(fullName));
+    }
+    
     internal static MetadataFieldContainer? FindFieldContainerByName(this MetadataContainer container, string name) {
         return container.Fields.FirstOrDefault(x => x.FieldDef.Name == name);
     }
@@ -25,7 +29,7 @@ internal static class MetadataContainerExtensions {
         foreach (var fieldContainer in container.Fields.Where(x => !UnispectEx.Core.Util.Helpers.IsObfuscatedSymbolName(x.Name)))
             fieldContainer.Export = true;
     }
-
+    
     internal static void CleanPropertyFieldNames(this MetadataContainer container) {
         var type = container.TypeDef;
 
