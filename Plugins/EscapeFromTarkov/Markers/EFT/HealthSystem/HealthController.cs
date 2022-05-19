@@ -23,7 +23,7 @@ internal class HealthController : IMarker {
         if (healthControllerGetter is null)
             return false;
 
-        var activeHealthControllerTypeDef = healthControllerProperty.GetMethod.ReturnType.ScopeType as TypeDef;
+        var activeHealthControllerTypeDef = healthControllerGetter.ReturnType.ScopeType as TypeDef;
         
         if (activeHealthControllerTypeDef is null)
             return false;

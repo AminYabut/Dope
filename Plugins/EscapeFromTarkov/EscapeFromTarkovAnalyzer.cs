@@ -144,6 +144,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new Item(),
         new ItemTemplate(),
         new MalfunctionState(),
+        new Grid(),
         new Slot(),
         new Weapon(),
         new WeaponTemplate(),
