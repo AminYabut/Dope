@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-
 using EscapeFromTarkov.Extensions;
 
 using UnispectEx.Core.Inspector;

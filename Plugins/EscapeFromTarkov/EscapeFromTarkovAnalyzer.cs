@@ -74,6 +74,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new WildSpawnType(),
 
         new FirearmController(),
+        new ItemHandsController(),
 
         new SkillManager(),
 
@@ -100,6 +101,10 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         
         new TurnAwayEffector(),
 
+        new RaidController(),
+        new SelectedLocation(),
+        new AfkMonitor(),
+        
         // EFT.Animations
         new BreathEffector(),
         new ProceduralWeaponAnimation(),
@@ -137,6 +142,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new LootableContainer(),
 
         // EFT.InventoryLogic
+        new Ammo(),
         new AmmoTemplate(),
         new EquipmentContainer(),
         new EquipmentSlot(),
@@ -154,6 +160,15 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         // EFT.Network
         new Backend(),
         new Session(),
+        new GameServer(),
+        new NetworkGame(),
+        new ChannelCombined(),
+        new BackendConfig(),
+        new InertiaConfig(),
+        new StaminaConfig(),
+        new BallisticConfig(),
+        new HealthConfig(),
+        new FallingConfig(),
 
         // TOD
         new TOD_AtmosphereParameters(),
