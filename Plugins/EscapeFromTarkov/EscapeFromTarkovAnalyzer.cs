@@ -6,6 +6,7 @@ using EscapeFromTarkov.Markers.Diz.Skinning;
 using EscapeFromTarkov.Markers.EFT;
 using EscapeFromTarkov.Markers.EFT.Animations;
 using EscapeFromTarkov.Markers.EFT.Ballistics;
+using EscapeFromTarkov.Markers.EFT.CameraControl;
 using EscapeFromTarkov.Markers.EFT.EnvironmentEffect;
 using EscapeFromTarkov.Markers.EFT.HealthSystem;
 using EscapeFromTarkov.Markers.EFT.Interactive;
@@ -42,6 +43,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new Skin(),
 
         // EFT
+        new World(),
         new GameWorld(),
         new ClientGameWorld(),
         new ClientLocalGameWorld(),
@@ -60,6 +62,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new BifacialTransform(),
 
         new Player(),
+        new ObservedPlayer(),
         new PlayerBody(),
         
         new PhysicalController(),
@@ -105,6 +108,15 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new SelectedLocation(),
         new AfkMonitor(),
         
+        new WeaponPrefab(),
+        
+        new PlayerBones(),
+        
+        //EFT.CameraControl
+        new CameraManager(),
+        new OpticCameraManager(),
+        new OpticSight(),
+        
         // EFT.Animations
         new BreathEffector(),
         new ProceduralWeaponAnimation(),
@@ -138,8 +150,11 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new LootItem(),
         new Corpse(),
         new WorldInteractiveObject(),
+        new EDoorState(),
         new Door(),
         new LootableContainer(),
+        new Switch(),
+        new StationaryWeapon(),
 
         // EFT.InventoryLogic
         new Ammo(),
@@ -169,6 +184,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new BallisticConfig(),
         new HealthConfig(),
         new FallingConfig(),
+        new RagFairConfig(),
 
         // TOD
         new TOD_AtmosphereParameters(),

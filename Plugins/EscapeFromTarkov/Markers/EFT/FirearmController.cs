@@ -24,9 +24,33 @@ internal class FirearmController: IMarker {
         moaDef.Name = "_moa";
 
         shotGunDispersionDef.Name = "_shotgunDispersion";
+
+        var buffsDef = FindBuffField(firearmControllerContainer.TypeDef);
+        if (buffsDef is null)
+            return false;
+
+        var buffInfoTypeDef = UnispectEx.Core.Util.Helpers.TypeDefFromSig(buffsDef.FieldType);
+        if (buffInfoTypeDef is null)
+            return false;
+        
+        var buffInfoContainer = buffInfoTypeDef.ToMetadataContainer(containers);
+        if (buffInfoContainer is null)
+            return false;
+
+        var prefabDef = FindPrefabField(firearmControllerContainer.TypeDef);
+        if (prefabDef is null)
+            return false;
+
+        prefabDef.Name = "_weaponPrefab";
+
+        buffInfoContainer.Namespace = "EFT";
+        buffInfoContainer.Name = "BuffInfo";
         
         firearmControllerContainer.CleanPropertyFieldNames();
         firearmControllerContainer.ExportNonObfuscatedSymbols();
+        
+        buffInfoContainer.CleanPropertyFieldNames();
+        buffInfoContainer.ExportNonObfuscatedSymbols();
 
         return true;
     }
@@ -73,5 +97,12 @@ internal class FirearmController: IMarker {
         }
 
         return new (null, null);
+    }
+
+    private FieldDef? FindBuffField(TypeDef firearmControllerContainerTypeDef) {
+        return (from method in firearmControllerContainerTypeDef.Methods where method.Name == "get_BuffInfo" && method.HasBody select (method.Body.Instructions[1].Operand) as FieldDef).FirstOrDefault();
+    }
+    private FieldDef? FindPrefabField(TypeDef firearmControllerContainerTypeDef) {
+        return firearmControllerContainerTypeDef.Fields.FirstOrDefault(field => field.FieldType.FullName == "WeaponPrefab");
     }
 }

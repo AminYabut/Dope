@@ -1,4 +1,5 @@
-﻿using UnispectEx.Core.Inspector;
+﻿using dnlib.DotNet;
+using UnispectEx.Core.Inspector;
 
 namespace EscapeFromTarkov.Extensions; 
 
@@ -19,8 +20,23 @@ internal static class MetadataContainerExtensions {
         return containers.FirstOrDefault(x => x.FullName.Contains(fullName));
     }
     
+    internal static MetadataContainer? FindContainerContainingFieldName(this IEnumerable<MetadataContainer> containers, string name) {
+        return containers.FirstOrDefault(container => container.TypeDef.Fields.Any(field => field.Name == name));
+    }
+    
+    internal static MetadataContainer? FindContainerContainingMethodName(this IEnumerable<MetadataContainer> containers, string name) {
+        return containers.FirstOrDefault(container => container.TypeDef.Methods.Any(method => method.Name == name));
+    }
+    
     internal static MetadataFieldContainer? FindFieldContainerByName(this MetadataContainer container, string name) {
         return container.Fields.FirstOrDefault(x => x.FieldDef.Name == name);
+    }
+    internal static FieldDef? FindFieldDefByName(this IEnumerable<MetadataContainer> containers, string name) {
+        return containers.SelectMany(container => container.TypeDef.Fields).FirstOrDefault(field => field.Name == name);
+    }
+    
+    internal static MethodDef? FindMethodDefByName(this IEnumerable<MetadataContainer> containers, string name) {
+        return containers.SelectMany(container => container.TypeDef.Methods).FirstOrDefault(method => method.Name == name);
     }
 
     internal static void ExportNonObfuscatedSymbols(this MetadataContainer container) {
