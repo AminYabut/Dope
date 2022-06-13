@@ -14,7 +14,7 @@ using EscapeFromTarkov.Markers.EFT.InventoryLogic;
 using EscapeFromTarkov.Markers.EFT.Network;
 using EscapeFromTarkov.Markers.EFT.Tod;
 using EscapeFromTarkov.Markers.EFT.Visual;
-
+using EscapeFromTarkov.Markers.EFT.Weather;
 using UnispectEx.Core.Inspector;
 
 namespace EscapeFromTarkov;
@@ -195,6 +195,17 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new TOD_MeshQualityType(),
         new TOD_Sky(),
         new TOD_SkyQualityType(),
+        new TOD_Scattering(),
+        new TOD_ImageEffect(),
+        new TOD_Components(),
+        new TOD_Time(),
+        new TOD_CloudParameters(),
+        new TOD_Weather(),
+        
+        // EFT.Weather
+        new WeatherController(),
+        new RainController(),
+        new WeatherDebug(),
 
         // Visual
         new LoddedSkin(),
