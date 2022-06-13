@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-using UnispectEx.Core;
+﻿using UnispectEx.Core;
 using UnispectEx.Core.Inspector;
 
 namespace EscapeFromTarkov;

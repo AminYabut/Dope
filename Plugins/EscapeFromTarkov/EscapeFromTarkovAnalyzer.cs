@@ -6,6 +6,7 @@ using EscapeFromTarkov.Markers.Diz.Skinning;
 using EscapeFromTarkov.Markers.EFT;
 using EscapeFromTarkov.Markers.EFT.Animations;
 using EscapeFromTarkov.Markers.EFT.Ballistics;
+using EscapeFromTarkov.Markers.EFT.CameraControl;
 using EscapeFromTarkov.Markers.EFT.EnvironmentEffect;
 using EscapeFromTarkov.Markers.EFT.HealthSystem;
 using EscapeFromTarkov.Markers.EFT.Interactive;
@@ -13,7 +14,7 @@ using EscapeFromTarkov.Markers.EFT.InventoryLogic;
 using EscapeFromTarkov.Markers.EFT.Network;
 using EscapeFromTarkov.Markers.EFT.Tod;
 using EscapeFromTarkov.Markers.EFT.Visual;
-
+using EscapeFromTarkov.Markers.EFT.Weather;
 using UnispectEx.Core.Inspector;
 
 namespace EscapeFromTarkov;
@@ -42,6 +43,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new Skin(),
 
         // EFT
+        new World(),
         new GameWorld(),
         new ClientGameWorld(),
         new ClientLocalGameWorld(),
@@ -60,6 +62,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new BifacialTransform(),
 
         new Player(),
+        new ObservedPlayer(),
         new PlayerBody(),
         
         new PhysicalController(),
@@ -74,6 +77,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new WildSpawnType(),
 
         new FirearmController(),
+        new ItemHandsController(),
 
         new SkillManager(),
 
@@ -100,6 +104,19 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         
         new TurnAwayEffector(),
 
+        new RaidController(),
+        new SelectedLocation(),
+        new AfkMonitor(),
+        
+        new WeaponPrefab(),
+        
+        new PlayerBones(),
+        
+        //EFT.CameraControl
+        new CameraManager(),
+        new OpticCameraManager(),
+        new OpticSight(),
+        
         // EFT.Animations
         new BreathEffector(),
         new ProceduralWeaponAnimation(),
@@ -133,10 +150,14 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new LootItem(),
         new Corpse(),
         new WorldInteractiveObject(),
+        new EDoorState(),
         new Door(),
         new LootableContainer(),
+        new Switch(),
+        new StationaryWeapon(),
 
         // EFT.InventoryLogic
+        new Ammo(),
         new AmmoTemplate(),
         new EquipmentContainer(),
         new EquipmentSlot(),
@@ -154,6 +175,16 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         // EFT.Network
         new Backend(),
         new Session(),
+        new GameServer(),
+        new NetworkGame(),
+        new ChannelCombined(),
+        new BackendConfig(),
+        new InertiaConfig(),
+        new StaminaConfig(),
+        new BallisticConfig(),
+        new HealthConfig(),
+        new FallingConfig(),
+        new RagFairConfig(),
 
         // TOD
         new TOD_AtmosphereParameters(),
@@ -164,6 +195,17 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new TOD_MeshQualityType(),
         new TOD_Sky(),
         new TOD_SkyQualityType(),
+        new TOD_Scattering(),
+        new TOD_ImageEffect(),
+        new TOD_Components(),
+        new TOD_Time(),
+        new TOD_CloudParameters(),
+        new TOD_Weather(),
+        
+        // EFT.Weather
+        new WeatherController(),
+        new RainController(),
+        new WeatherDebug(),
 
         // Visual
         new LoddedSkin(),

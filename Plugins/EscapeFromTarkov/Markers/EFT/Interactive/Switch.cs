@@ -6,15 +6,15 @@ using UnispectEx.Core.Inspector;
 
 namespace EscapeFromTarkov.Markers.EFT.Interactive; 
 
-internal class Door : IMarker {
+internal class Switch : IMarker {
     public bool Mark(ImmutableList<MetadataContainer> containers) {
-        var doorContainer = containers.FindContainerByFullName("EFT.Interactive.Door");
+        var switchContainer = containers.FindContainerByFullName("EFT.Interactive.Switch");
 
-        if (doorContainer is null)
+        if (switchContainer is null)
             return false;
 
-        doorContainer.CleanPropertyFieldNames();
-        doorContainer.ExportNonObfuscatedSymbols();
+        switchContainer.CleanPropertyFieldNames();
+        switchContainer.ExportNonObfuscatedSymbols();
 
         return true;
     }
