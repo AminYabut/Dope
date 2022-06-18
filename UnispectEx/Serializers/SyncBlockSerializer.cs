@@ -349,7 +349,8 @@ public class SyncBlockSerializer : IDumpSerializer {
             if (type is "<ERROR_READING_PRIMITIVE_NAME>" or "<ILLEGAL_STRUCT>" or "<OBFUSCATED_SYMBOL_NAME>")
                 writer.Write("//");
 
-            writer.WriteLine($"    {(isStruct ? "FIELD" : "SYNC_FIELD")}({type}, {name}, 0x{offset:X}) // {fieldDef.FieldType.FullName}");
+            //writer.WriteLine($"    {(isStruct ? "FIELD" : "SYNC_FIELD")}({type}, {name}, 0x{offset:X}) // {fieldDef.FieldType.FullName}");
+            writer.WriteLine($"    {(isStruct ? "FIELD" : "SYNC_FIELD")}({type}, {name}, 0x{offset:X})");
         }
         
         if (insideStaticBlock)
