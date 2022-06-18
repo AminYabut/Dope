@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 
 using dnlib.DotNet;
-
 using UnispectEx.Core.Inspector;
 using UnispectEx.Core.Util;
 
@@ -302,7 +301,7 @@ public class SyncBlockSerializer : IDumpSerializer {
         }
 
         bool isStruct = container.TypeDef.IsValueType;
-        
+
         writer.WriteLine($"// {(isStruct ? "struct" : "class")}: {container.Name}");
         writer.WriteLine($"// parents: {BaseTypes(container.TypeDef)}");
 
@@ -327,6 +326,8 @@ public class SyncBlockSerializer : IDumpSerializer {
             if (fieldDef.IsLiteral)
                 continue;
 
+            bool isObfuscated = Helpers.IsObfuscatedSymbolName(fieldDef.FieldType.FullName);
+            
             bool alreadyInsideStaticBlock = insideStaticBlock;
             insideStaticBlock = fieldDef.IsStatic;
             
@@ -349,8 +350,7 @@ public class SyncBlockSerializer : IDumpSerializer {
             if (type is "<ERROR_READING_PRIMITIVE_NAME>" or "<ILLEGAL_STRUCT>" or "<OBFUSCATED_SYMBOL_NAME>")
                 writer.Write("//");
 
-            //writer.WriteLine($"    {(isStruct ? "FIELD" : "SYNC_FIELD")}({type}, {name}, 0x{offset:X}) // {fieldDef.FieldType.FullName}");
-            writer.WriteLine($"    {(isStruct ? "FIELD" : "SYNC_FIELD")}({type}, {name}, 0x{offset:X})");
+            writer.WriteLine($"    {(isStruct ? "FIELD" : "SYNC_FIELD")}({type}, {name}, 0x{offset:X}) {(isObfuscated ? "<OBFUSCATED_SYMBOL_NAME>" : "// " + fieldDef.FieldType.FullName)}");
         }
         
         if (insideStaticBlock)
