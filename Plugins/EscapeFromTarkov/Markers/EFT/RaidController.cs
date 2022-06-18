@@ -29,10 +29,18 @@ internal class RaidController : IMarker {
         
         raidControllerContainer.Namespace = "EFT";
         raidControllerContainer.Name = "RaidController";
+
+        FieldDef? selectedDef = raidControllerContainer.Fields.FirstOrDefault(field => field.FieldDef.FieldSig.Type.FullName == "JsonType.EDateTime")?.FieldDef;
+        if (selectedDef is null)
+            return false;
         
-        foreach (var field in raidControllerContainer.Fields)
-            if (field.FieldDef.FieldSig.Type.FullName == "JsonType.EDateTime")
-                field.Name = "_selectedDateTime";
+        selectedDef.Name = "_selectedDateTime";
+
+        FieldDef? commonUIDef = raidControllerContainer.Fields.FirstOrDefault(field => field.FieldDef.FieldType.FullName == "EFT.UI.CommonUI")?.FieldDef;
+        if (commonUIDef is null)
+            return false;
+
+        commonUIDef.Name = "_commonUI";
         
         raidControllerContainer.CleanPropertyFieldNames();
         raidControllerContainer.ExportNonObfuscatedSymbols();

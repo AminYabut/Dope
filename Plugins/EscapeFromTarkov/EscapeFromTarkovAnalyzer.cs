@@ -13,6 +13,7 @@ using EscapeFromTarkov.Markers.EFT.Interactive;
 using EscapeFromTarkov.Markers.EFT.InventoryLogic;
 using EscapeFromTarkov.Markers.EFT.Network;
 using EscapeFromTarkov.Markers.EFT.Tod;
+using EscapeFromTarkov.Markers.EFT.UI;
 using EscapeFromTarkov.Markers.EFT.Visual;
 using EscapeFromTarkov.Markers.EFT.Weather;
 using UnispectEx.Core.Inspector;
@@ -49,6 +50,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new ClientLocalGameWorld(),
 
         new EFTHardSettings(),
+        new ShellsSettings(),
 
         new InventoryController(),
         new Inventory(),
@@ -73,6 +75,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new Profile(),
         new ProfileInfo(),
         new ProfileSettings(),
+        new Loyalty(),
 
         new WildSpawnType(),
 
@@ -116,6 +119,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new CameraManager(),
         new OpticCameraManager(),
         new OpticSight(),
+        new HighLightMesh(),
         
         // EFT.Animations
         new BreathEffector(),
@@ -127,6 +131,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new BallisticCollider(),
         new BaseBallistic(),
         new MaterialType(),
+        new BallisticPreset(),
         new Shot(),
         new TrajectoryInfo(),
 
@@ -207,6 +212,14 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new RainController(),
         new WeatherDebug(),
 
+        // EFT.UI
+        new CommonUI(),
+        new UpdatableChatMember(),
+        new ChatScreen(),
+        new ChatFriendsPanel(),
+        //new SocialNetwork(),
+        new UIList(),
+        
         // Visual
         new LoddedSkin(),
         new CustomSkin(),
