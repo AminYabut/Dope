@@ -102,6 +102,6 @@ public static class Helpers {
     }
 
     public static bool IsObfuscatedSymbolName(string name) {
-        return Regex.IsMatch(name, "[^a-zA-Z0-9_`]", RegexOptions.None);
+        return Regex.IsMatch(name, @"[^a-zA-Z0-9_.`\]\[]", RegexOptions.None);
     }
 }
