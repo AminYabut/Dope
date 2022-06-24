@@ -236,10 +236,18 @@ public class SyncBlockSerializer : IDumpSerializer {
     private void WriteClass(StreamWriter writer, MetadataContainer container) {
         uint classSize = 0;
         
-        if (container.Fields.Count > 0) {
+        if (container.Fields.Count > 0)
+        {
             var highestOffsetField = container.Fields
-                .Where(x => !x.FieldDef.IsLiteral && !x.FieldDef.IsStatic)
+                .Where(x => !x.FieldDef.IsLiteral && !x.FieldDef.IsStatic).DefaultIfEmpty()
                 .Aggregate((l, r) => l.MonoClassField.Offset > r.MonoClassField.Offset ? l : r);
+            if (highestOffsetField is null)
+                highestOffsetField = container.Fields
+                    .Where(x => !x.FieldDef.IsLiteral).DefaultIfEmpty()
+                    .Aggregate((l, r) => l.MonoClassField.Offset > r.MonoClassField.Offset ? l : r);
+            
+            if (highestOffsetField is null)
+                return;
             
             uint size = highestOffsetField.FieldDef.GetFieldSize();
             if (size != 0)
@@ -350,7 +358,7 @@ public class SyncBlockSerializer : IDumpSerializer {
             if (type is "<ERROR_READING_PRIMITIVE_NAME>" or "<ILLEGAL_STRUCT>" or "<OBFUSCATED_SYMBOL_NAME>")
                 writer.Write("//");
 
-            writer.WriteLine($"    {(isStruct ? "FIELD" : "SYNC_FIELD")}({type}, {name}, 0x{offset:X}) {(isObfuscated ? "<OBFUSCATED_SYMBOL_NAME>" : "// " + fieldDef.FieldType.FullName)}");
+            writer.WriteLine($"    {(isStruct ? "FIELD" : "SYNC_FIELD")}({type}, {name}, 0x{offset:X}) {(isObfuscated ? "// <OBFUSCATED_SYMBOL_NAME>" : "// " + fieldDef.FieldType.FullName)}");
         }
         
         if (insideStaticBlock)
