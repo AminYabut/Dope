@@ -13,10 +13,11 @@ internal class NetworkGame : IMarker {
         if (networkGameContainer is null)
             return false;
 
-        foreach (var field in networkGameContainer.Fields)
-            if (field.FieldDef.FieldType.FullName == "EFT.ChannelCombined")
-                field.Name = "ChannelCombined";
+        var field = networkGameContainer.Fields.FirstOrDefault(field => field.FieldDef.FieldType.FullName == "EFT.ChannelCombined")?.FieldDef;
+        if (field is null)
+            return false;
         
+        field.Name = "ChannelCombined";
         
         networkGameContainer.Namespace = "EFT.Network";
         networkGameContainer.Name = "NetworkGame";

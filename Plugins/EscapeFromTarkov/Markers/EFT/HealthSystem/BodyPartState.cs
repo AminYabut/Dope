@@ -6,7 +6,7 @@ namespace EscapeFromTarkov.Markers.EFT.HealthSystem;
 
 internal class BodyPartState : IMarker {
     public bool Mark(ImmutableList<MetadataContainer> containers) {
-        var bodyPartStateContainer = containers.FindContainerByFullName("EFT.HealthSystem.HealthController/BodyPartState");
+        var bodyPartStateContainer = containers.FindContainerContainingFullName("BodyPartState");
 
         if (bodyPartStateContainer is null)
             return false;

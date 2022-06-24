@@ -31,6 +31,11 @@ internal static class MetadataContainerExtensions {
     internal static MetadataFieldContainer? FindFieldContainerByName(this MetadataContainer container, string name) {
         return container.Fields.FirstOrDefault(x => x.FieldDef.Name == name);
     }
+    
+    internal static MethodDef? FindMethodDefByName(this MetadataContainer container, string name) {
+        return container.TypeDef.Methods.FirstOrDefault(x => x.Name == name);
+    }
+    
     internal static FieldDef? FindFieldDefByName(this IEnumerable<MetadataContainer> containers, string name) {
         return containers.SelectMany(container => container.TypeDef.Fields).FirstOrDefault(field => field.Name == name);
     }

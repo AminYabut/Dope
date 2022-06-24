@@ -42,6 +42,12 @@ internal class RaidController : IMarker {
 
         commonUIDef.Name = "_commonUI";
         
+        FieldDef? preloaderUIDef = raidControllerContainer.Fields.FirstOrDefault(field => field.FieldDef.FieldType.FullName == "EFT.UI.PreloaderUI")?.FieldDef;
+        if (preloaderUIDef is null)
+            return false;
+
+        preloaderUIDef.Name = "_preloaderUI";
+        
         raidControllerContainer.CleanPropertyFieldNames();
         raidControllerContainer.ExportNonObfuscatedSymbols();
         

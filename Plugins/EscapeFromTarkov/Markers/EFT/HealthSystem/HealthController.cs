@@ -9,40 +9,39 @@ namespace EscapeFromTarkov.Markers.EFT.HealthSystem;
 internal class HealthController : IMarker {
     public bool Mark(ImmutableList<MetadataContainer> containers) {
         var playerContainer = containers.FindContainerByFullName("EFT.Player");
-
         if (playerContainer is null)
             return false;
 
         var healthControllerProperty = playerContainer.TypeDef.FindProperty("ActiveHealthController");
-        
         if (healthControllerProperty is null)
             return false;
 
         var healthControllerGetter = healthControllerProperty.GetMethod;
-        
         if (healthControllerGetter is null)
             return false;
 
         var activeHealthControllerTypeDef = healthControllerGetter.ReturnType.ScopeType as TypeDef;
-        
         if (activeHealthControllerTypeDef is null)
             return false;
         
         var healthControllerTypeDef = UnispectEx.Core.Util.Helpers.TypeDefFromSig(activeHealthControllerTypeDef.BaseType.ToTypeSig());
-        
         if (healthControllerTypeDef is null)
             return false;
 
         var activeHealthControllerContainer = activeHealthControllerTypeDef.ToMetadataContainer(containers);
-        
         if (activeHealthControllerContainer is null)
             return false;
         
         var healthControllerContainer = healthControllerTypeDef.ToMetadataContainer(containers);
-        
         if (healthControllerContainer is null)
             return false;
-        
+
+        var bodyPartDictDef = healthControllerContainer.Fields.FirstOrDefault(field => field.FieldDef.FieldType.FullName.Contains("BodyPartState"));
+        if (bodyPartDictDef is null)
+            return false;
+
+        bodyPartDictDef.Name = "_bodyPartStates";
+
         activeHealthControllerContainer.Namespace = "EFT.HealthSystem";
         activeHealthControllerContainer.Name = "ActiveHealthController";
         
