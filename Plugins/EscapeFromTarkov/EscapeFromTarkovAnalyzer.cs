@@ -226,6 +226,8 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         //new SocialNetwork(),
         new PreloaderUI(),
         new UIList(),
+        new ScreenController(),
+        new ScreenType(),
         
         // Visual
         new LoddedSkin(),
