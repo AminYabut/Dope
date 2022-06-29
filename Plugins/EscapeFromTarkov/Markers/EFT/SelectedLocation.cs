@@ -13,13 +13,7 @@ internal class SelectedLocation : IMarker {
         if (raidControllerContainer is null)
             return false;
 
-        FieldDef? selectedLocationFieldDef = null;
-        foreach (var field in raidControllerContainer.Fields)
-            if (field.Name == "_selectedLocation") {
-                selectedLocationFieldDef = field.FieldDef;
-                break;
-            }
-
+        var selectedLocationFieldDef = raidControllerContainer.Fields.FirstOrDefault(field => field.Name == "_selectedLocation")?.FieldDef;
         if (selectedLocationFieldDef is null)
             return false;
 

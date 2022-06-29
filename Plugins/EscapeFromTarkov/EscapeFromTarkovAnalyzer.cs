@@ -22,11 +22,10 @@ namespace EscapeFromTarkov;
 
 internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
     public bool Analyze(ImmutableList<MetadataContainer> containers) {
-        foreach (var marker in _markers) {
+        foreach (var marker in _markers)
             if (!marker.Mark(containers))
                 return false;
-        }
-
+        
         return true;
     }
 
@@ -139,10 +138,10 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new EnvironmentType(),
         
         // EFT.HealthSystem
-        new HealthController(),
         new BodyPartState(),
         new HealthValue(),
         new ValueStruct(),
+        new HealthController(),
 
         // EFT.Interactive
         new ExfiltrationController(),
@@ -176,6 +175,12 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new WeaponTemplate(),
         new ItemController(),
         new StackSlot(),
+        new ArmorItem(),
+        new TacticalRigArmorItem(),
+        new ArmorTemplate(),
+        new ArmorComponent(),
+        new HeadArmorTemplate(),
+        new EquipableItemTemplate(),
         
         // EFT.Network
         new Backend(),
@@ -190,6 +195,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new HealthConfig(),
         new FallingConfig(),
         new RagFairConfig(),
+        new ServerBackend(),
 
         // TOD
         new TOD_AtmosphereParameters(),
@@ -218,7 +224,10 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new ChatScreen(),
         new ChatFriendsPanel(),
         //new SocialNetwork(),
+        new PreloaderUI(),
         new UIList(),
+        new ScreenController(),
+        new ScreenType(),
         
         // Visual
         new LoddedSkin(),

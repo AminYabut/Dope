@@ -13,6 +13,12 @@ internal class ThermalVision : IMarker {
         if (thermalVisionController is null)
             return false;
 
+        var materialDef = thermalVisionController.Fields.FirstOrDefault(field => field.FieldDef.FieldType.FullName == "UnityEngine.Material")?.FieldDef;
+        if (materialDef is null)
+            return false;
+
+        materialDef.Name = "_Material";
+        
         thermalVisionController.Namespace = "BSG.CameraEffects";
 
         thermalVisionController.CleanPropertyFieldNames();

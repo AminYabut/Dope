@@ -100,8 +100,8 @@ public static class Helpers {
 
         return builder.ToString();
     }
-
+    //TODO: Support symbols with <>
     public static bool IsObfuscatedSymbolName(string name) {
-        return Regex.IsMatch(name, "[^a-zA-Z0-9_`]", RegexOptions.None);
+        return Regex.IsMatch(name, @"[^a-zA-Z0-9_.`\]\[]", RegexOptions.None); //Regex.IsMatch(name, @"[^k__a-zA-Z]", RegexOptions.None) ||
     }
 }
