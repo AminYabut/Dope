@@ -30,11 +30,11 @@ internal class RaidController : IMarker {
         raidControllerContainer.Namespace = "EFT";
         raidControllerContainer.Name = "RaidController";
 
-        FieldDef? selectedDef = raidControllerContainer.Fields.FirstOrDefault(field => field.FieldDef.FieldSig.Type.FullName == "JsonType.EDateTime")?.FieldDef;
-        if (selectedDef is null)
+        FieldDef? raidSettingsDef = raidControllerContainer.Fields.FirstOrDefault(field => field.FieldDef.FieldSig.Type.FullName == "EFT.RaidSettings")?.FieldDef;
+        if (raidSettingsDef is null)
             return false;
         
-        selectedDef.Name = "_selectedDateTime";
+        raidSettingsDef.Name = "_raidSettings";
 
         FieldDef? commonUIDef = raidControllerContainer.Fields.FirstOrDefault(field => field.FieldDef.FieldType.FullName == "EFT.UI.CommonUI")?.FieldDef;
         if (commonUIDef is null)
@@ -56,10 +56,9 @@ internal class RaidController : IMarker {
         
         return true;
     }
-    
+
     private FieldDef? FindRaidControllerField(TypeDef mainApplicationContainer) {
-        foreach (var field in mainApplicationContainer.Fields)
-        {
+        foreach (var field in mainApplicationContainer.Fields) {
             var fieldType = field.FieldType;
             if (fieldType is null)
                 continue;
@@ -67,15 +66,16 @@ internal class RaidController : IMarker {
             var fieldTypeDef = fieldType.TryGetTypeDef();
             if (fieldTypeDef is null)
                 continue;
-            
+
             var methods = fieldTypeDef.Methods;
             if (methods is null)
                 continue;
-            
+
             foreach (var method in methods)
-                if (UTF8String.Equals(method.Name, "get_IsInSession")) 
+                if (UTF8String.Equals(method.Name, "get_IsInSession"))
                     return field;
         }
+
         return null;
     }
 }

@@ -107,6 +107,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new TurnAwayEffector(),
 
         new RaidController(),
+        new RaidSettings(),
         new SelectedLocation(),
         new AfkMonitor(),
         

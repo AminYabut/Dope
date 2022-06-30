@@ -8,12 +8,12 @@ namespace EscapeFromTarkov.Markers.EFT;
 
 internal class SelectedLocation : IMarker {
     public bool Mark(ImmutableList<MetadataContainer> containers) {
-        var raidControllerContainer = containers.FindContainerByFullName("EFT.RaidController");
+        var raidSettingsContainer = containers.FindContainerByFullName("EFT.RaidSettings");
 
-        if (raidControllerContainer is null)
+        if (raidSettingsContainer is null)
             return false;
 
-        var selectedLocationFieldDef = raidControllerContainer.Fields.FirstOrDefault(field => field.Name == "_selectedLocation")?.FieldDef;
+        var selectedLocationFieldDef = raidSettingsContainer.Fields.FirstOrDefault(field => field.Name == "SelectedLocation")?.FieldDef;
         if (selectedLocationFieldDef is null)
             return false;
 
