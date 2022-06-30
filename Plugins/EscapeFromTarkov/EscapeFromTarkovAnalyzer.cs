@@ -200,6 +200,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new FallingConfig(),
         new RagFairConfig(),
         new ServerBackend(),
+        new CoopConfig(),
 
         // TOD
         new TOD_AtmosphereParameters(),
