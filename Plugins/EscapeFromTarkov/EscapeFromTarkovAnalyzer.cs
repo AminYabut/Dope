@@ -105,7 +105,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new HideoutController(),
         
         new TurnAwayEffector(),
-
+        
         new RaidController(),
         new RaidSettings(),
         new SelectedLocation(),
@@ -174,6 +174,9 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new Slot(),
         new Weapon(),
         new WeaponTemplate(),
+        new MagazineItem(),
+        new MagazineTemplate(),
+        new ModTemplate(),
         new ItemController(),
         new StackSlot(),
         new ArmorItem(),
