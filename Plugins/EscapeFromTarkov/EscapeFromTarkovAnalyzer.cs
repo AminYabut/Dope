@@ -16,6 +16,7 @@ using EscapeFromTarkov.Markers.EFT.Tod;
 using EscapeFromTarkov.Markers.EFT.UI;
 using EscapeFromTarkov.Markers.EFT.Visual;
 using EscapeFromTarkov.Markers.EFT.Weather;
+using EscapeFromTarkov.Markers.EFT.Counters;
 using UnispectEx.Core.Inspector;
 
 namespace EscapeFromTarkov;
@@ -74,6 +75,7 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new Profile(),
         new ProfileInfo(),
         new ProfileSettings(),
+        new ProfileStats(),
         new Loyalty(),
 
         new WildSpawnType(),
@@ -239,6 +241,13 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         new CustomSkin(),
         new Dress(),
         new SkinDress(),
-        new TorsoSkin()
+        new TorsoSkin(),
+        
+        // EFT.Counters
+        new CounterValueType(),
+        new CounterTag(),
+        new Counter(),
+        new CounterDictionary(),
+        new CounterHashTable()
     };
 }
