@@ -117,6 +117,9 @@ internal class EscapeFromTarkovAnalyzer : IDumpAnalyzer {
         
         new PlayerBones(),
         
+        new Location(),
+        new BossLocationSpawn(),
+
         //EFT.CameraControl
         new CameraManager(),
         new OpticCameraManager(),
